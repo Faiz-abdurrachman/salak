@@ -2,6 +2,7 @@
 
 import { useState, useCallback } from "react";
 import dynamic from "next/dynamic";
+import { useBreakpoint } from "@/hooks/useBreakpoint";
 
 const LoadingScreen = dynamic(() => import("@/components/LoadingScreen"), { ssr: false });
 const SalakCanvas   = dynamic(() => import("@/components/SalakCanvas"),   { ssr: false });
@@ -18,6 +19,8 @@ const GRAIN_SVG = `data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' wi
 export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
   const toggleMenu = useCallback(() => setMenuOpen((v) => !v), []);
+  const bp = useBreakpoint();
+  const containerHeight = bp === "mobile" ? "700vh" : bp === "tablet" ? "800vh" : "1100vh";
 
   return (
     <>
@@ -45,7 +48,7 @@ export default function Home() {
       */}
       <div
         id="parallax-container"
-        style={{ height: "1100vh", position: "relative", background: "#080806" }}
+        style={{ height: containerHeight, position: "relative", background: "#080806" }}
       >
         {/* Sticky canvas + overlays */}
         <div

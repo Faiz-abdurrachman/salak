@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useBreakpoint } from "@/hooks/useBreakpoint";
 
 interface FullscreenMenuProps {
   open: boolean;
@@ -12,6 +13,8 @@ const socials = ["X / Twitter", "Telegram", "Discord", "GitHub"];
 
 export default function FullscreenMenu({ open, onClose }: FullscreenMenuProps) {
   const [backHovered, setBackHovered] = useState(false);
+  const bp = useBreakpoint();
+  const isMobile = bp === "mobile";
 
   return (
     <div
@@ -33,7 +36,7 @@ export default function FullscreenMenu({ open, onClose }: FullscreenMenuProps) {
       {/* ── Top bar: Kembali button ─────────────────────────────────────────── */}
       <div
         style={{
-          height: "56px",
+          height: isMobile ? "48px" : "56px",
           flexShrink: 0,
           display: "flex",
           alignItems: "center",
@@ -96,23 +99,26 @@ export default function FullscreenMenu({ open, onClose }: FullscreenMenuProps) {
         </button>
       </div>
 
-      {/* ── Main body: links left, socials right ────────────────────────────── */}
+      {/* ── Main body: links left, socials right (stacked on mobile) ──────────── */}
       <div
         style={{
           flex: 1,
           display: "flex",
-          minHeight: 0, // allow shrink
+          flexDirection: isMobile ? "column" : "row",
+          minHeight: 0,
           overflow: "hidden",
         }}
       >
-        {/* Left — nav links */}
+        {/* Nav links */}
         <div
           style={{
-            flex: "0 0 60%",
+            flex: isMobile ? "0 0 auto" : "0 0 60%",
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
-            padding: "clamp(24px, 4vw, 56px) clamp(40px, 8vw, 120px)",
+            padding: isMobile
+              ? "clamp(24px, 5vw, 40px) clamp(24px, 6vw, 56px)"
+              : "clamp(24px, 4vw, 56px) clamp(40px, 8vw, 120px)",
             overflow: "hidden",
           }}
         >
@@ -133,10 +139,10 @@ export default function FullscreenMenu({ open, onClose }: FullscreenMenuProps) {
                   display: "block",
                   fontFamily: "var(--font-cormorant)",
                   fontWeight: 300,
-                  fontSize: "clamp(40px, 7vw, 88px)",
+                  fontSize: isMobile ? "clamp(36px, 10vw, 64px)" : "clamp(40px, 7vw, 88px)",
                   color: "rgba(242,237,228,0.1)",
                   lineHeight: 1.05,
-                  cursor: "none",
+                  cursor: isMobile ? "auto" : "none",
                   textDecoration: "none",
                   letterSpacing: "-0.02em",
                 }}
@@ -148,15 +154,18 @@ export default function FullscreenMenu({ open, onClose }: FullscreenMenuProps) {
           </nav>
         </div>
 
-        {/* Right — socials + contact */}
+        {/* Socials + contact */}
         <div
           style={{
-            flex: "0 0 40%",
+            flex: isMobile ? "0 0 auto" : "0 0 40%",
             display: "flex",
             flexDirection: "column",
-            justifyContent: "flex-end",
-            padding: "clamp(24px, 4vw, 56px) clamp(32px, 5vw, 72px)",
-            borderLeft: "1px solid rgba(242,237,228,0.07)",
+            justifyContent: isMobile ? "flex-start" : "flex-end",
+            padding: isMobile
+              ? "0 clamp(24px, 6vw, 56px) clamp(24px, 4vw, 40px)"
+              : "clamp(24px, 4vw, 56px) clamp(32px, 5vw, 72px)",
+            borderLeft: isMobile ? "none" : "1px solid rgba(242,237,228,0.07)",
+            borderTop: isMobile ? "1px solid rgba(242,237,228,0.07)" : "none",
             overflow: "hidden",
           }}
         >

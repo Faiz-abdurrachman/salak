@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useBreakpoint } from "@/hooks/useBreakpoint";
 
 interface NavbarProps {
   onMenuToggle: () => void;
@@ -9,6 +10,8 @@ interface NavbarProps {
 
 export default function Navbar({ onMenuToggle, menuOpen }: NavbarProps) {
   const [hamburgerHovered, setHamburgerHovered] = useState(false);
+  const bp = useBreakpoint();
+  const isMobile = bp === "mobile";
 
   // Lines are gold when hovered OR when menu is open
   const lineColor = hamburgerHovered || menuOpen ? "#B87333" : "#F2EDE4";
@@ -20,7 +23,7 @@ export default function Navbar({ onMenuToggle, menuOpen }: NavbarProps) {
         top: 0,
         left: 0,
         right: 0,
-        height: "56px",
+        height: isMobile ? "48px" : "56px",
         zIndex: 100,
         display: "flex",
         alignItems: "center",
@@ -34,7 +37,7 @@ export default function Navbar({ onMenuToggle, menuOpen }: NavbarProps) {
         style={{
           fontFamily: "var(--font-syne)",
           fontWeight: 800,
-          fontSize: "13px",
+          fontSize: isMobile ? "11px" : "13px",
           letterSpacing: "0.22em",
           lineHeight: 1,
           textShadow: "0 2px 20px rgba(8,8,6,0.8)",

@@ -97,6 +97,13 @@ button {
   will-change: transform;
 }
 
+@media (pointer: coarse) {
+  .cursor-dot,
+  .cursor-ring {
+    display: none;
+  }
+}
+
 /* Nav underline animation */
 .nav-link::after {
   content: '';

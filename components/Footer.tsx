@@ -1,5 +1,7 @@
 "use client";
 
+import { useBreakpoint } from "@/hooks/useBreakpoint";
+
 const ecosystemLinks = ["Token $SALAK", "Marketplace", "DeFi Lending", "Whitepaper"];
 const companyLinks = ["Tentang Kami", "Tim", "Blog", "Karir"];
 const communityLinks = ["X / Twitter", "Telegram", "Discord", "GitHub"];
@@ -25,11 +27,13 @@ const linkStyle: React.CSSProperties = {
   fontSize: "13px",
   color: "rgba(242,237,228,0.42)",
   textDecoration: "none",
-  cursor: "none",
   transition: "color 0.2s ease",
 };
 
 export default function Footer() {
+  const bp = useBreakpoint();
+  const isMobile = bp === "mobile";
+
   return (
     <footer
       style={{
@@ -43,9 +47,10 @@ export default function Footer() {
       <div
         style={{
           display: "flex",
+          flexDirection: isMobile ? "column" : "row",
           justifyContent: "space-between",
           flexWrap: "wrap",
-          gap: "48px",
+          gap: isMobile ? "32px" : "48px",
           marginBottom: "60px",
         }}
       >
@@ -81,7 +86,7 @@ export default function Footer() {
         <div
           style={{
             display: "flex",
-            gap: "60px",
+            gap: isMobile ? "32px" : "60px",
             flexWrap: "wrap",
           }}
         >

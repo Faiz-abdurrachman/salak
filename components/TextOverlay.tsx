@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useBreakpoint } from "@/hooks/useBreakpoint";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -24,7 +25,7 @@ const TSB = "0 1px 3px rgba(8,8,6,0.85), 0 2px 6px rgba(8,8,6,0.5)";
 const H1: React.CSSProperties = {
   fontFamily: "var(--font-cormorant)",
   fontWeight: 300,
-  fontSize: "clamp(64px, 10vw, 140px)",
+  fontSize: "clamp(36px, 8vw, 140px)",
   lineHeight: 0.9,
   letterSpacing: "-0.03em",
   color: "#F2EDE4",
@@ -35,7 +36,7 @@ const H1: React.CSSProperties = {
 const H2: React.CSSProperties = {
   fontFamily: "var(--font-cormorant)",
   fontWeight: 300,
-  fontSize: "clamp(40px, 6.5vw, 96px)",
+  fontSize: "clamp(28px, 6vw, 96px)",
   lineHeight: 0.92,
   letterSpacing: "-0.025em",
   color: "#F2EDE4",
@@ -56,7 +57,7 @@ const EYEBROW: React.CSSProperties = {
 const BODY: React.CSSProperties = {
   fontFamily: "var(--font-syne)",
   fontWeight: 300,
-  fontSize: "clamp(15px, 1.6vw, 18px)",
+  fontSize: "clamp(13px, 1.8vw, 18px)",
   lineHeight: 1.75,
   color: "rgba(242,237,228,0.42)",
   textShadow: TSB,
@@ -77,7 +78,6 @@ const ZONE_BASE: React.CSSProperties = {
 };
 
 // ─── Heading line — overflow:hidden wrapper ───────────────────────────────────
-// Inner span.reveal-line starts at translateY(108%), GSAP animates to 0%
 function Line({
   children,
   style,
@@ -92,7 +92,7 @@ function Line({
       style={{
         overflow: "hidden",
         display: "block",
-        paddingBottom: "0.06em", // prevent descender clipping
+        paddingBottom: "0.06em",
         ...style,
       }}
     >
@@ -112,6 +112,9 @@ function Line({
 
 // ─── Main component ───────────────────────────────────────────────────────────
 export default function TextOverlay() {
+  const bp = useBreakpoint();
+  const isMobile = bp === "mobile";
+
   const z1 = useRef<HTMLDivElement>(null);
   const z2 = useRef<HTMLDivElement>(null);
   const z3 = useRef<HTMLDivElement>(null);
@@ -124,27 +127,22 @@ export default function TextOverlay() {
     const container = document.getElementById("parallax-container");
     if (!container) return;
 
-    const ch = container.offsetHeight;          // 900vh in px
-    const maxScroll = ch - window.innerHeight;  // 800vh = actual scroll range
+    const ch = container.offsetHeight;
+    const maxScroll = ch - window.innerHeight;
 
-    // Clamp fraction to max scrollable pixel offset
     const toPx = (frac: number) => Math.min(frac * ch, maxScroll);
 
-    // ── Set initial states for all animated elements ──────────────────────
     zoneRefs.forEach((ref) => {
       const el = ref.current;
       if (!el) return;
-      // body text / body-late start invisible
       el.querySelectorAll<HTMLElement>(".reveal-body, .reveal-body-late").forEach((e) => {
         gsap.set(e, { opacity: 0 });
       });
-      // pills row starts invisible + offset
       el.querySelectorAll<HTMLElement>(".reveal-pills").forEach((e) => {
         gsap.set(e, { opacity: 0, y: 16 });
       });
     });
 
-    // ── Reveal function per zone ──────────────────────────────────────────
     function revealZone(zoneEl: HTMLElement) {
       const lines  = zoneEl.querySelectorAll<HTMLElement>(".reveal-line");
       const bodies = zoneEl.querySelectorAll<HTMLElement>(".reveal-body");
@@ -156,7 +154,6 @@ export default function TextOverlay() {
       const pillDelay = lineCount * 0.1 + 0.6;
       const lateDelay = lineCount * 0.1 + 1.6;
 
-      // Heading clip-path reveal — stagger 0.1s
       lines.forEach((line, i) => {
         gsap.to(line, {
           y: "0%",
@@ -167,7 +164,6 @@ export default function TextOverlay() {
         });
       });
 
-      // Body fade-in
       if (bodies.length) {
         gsap.to(Array.from(bodies), {
           opacity: 1,
@@ -178,7 +174,6 @@ export default function TextOverlay() {
         });
       }
 
-      // Late body (Zone 4 — "Inilah yang sedang kami bangun.")
       if (lates.length) {
         gsap.to(Array.from(lates), {
           opacity: 1,
@@ -189,7 +184,6 @@ export default function TextOverlay() {
         });
       }
 
-      // Pills — fade + slide
       if (pills.length) {
         gsap.to(Array.from(pills), {
           opacity: 1,
@@ -202,7 +196,6 @@ export default function TextOverlay() {
       }
     }
 
-    // ── Build ScrollTrigger per zone ──────────────────────────────────────
     const triggers = ZONE_RANGES.map((range, i) => {
       const el = zoneRefs[i].current;
       if (!el) return null;
@@ -212,16 +205,14 @@ export default function TextOverlay() {
 
       let revealed = false;
 
-      // Zone 1 — reveal text after loading screen completes (~3.2s)
       if (isZone1) {
         const tid = setTimeout(() => revealZone(el), 3100);
         (el as HTMLElement & { _tid?: ReturnType<typeof setTimeout> })._tid = tid;
       }
 
-      // Precompute normalized fade-in/hold-end fractions within the zone's [0,1] progress
-      const zoneSpan   = range.end - range.start;
-      const fadeInFrac = (range.peakStart - range.start) / zoneSpan; // fraction where opacity reaches 1
-      const holdEndFrac = (range.peakEnd  - range.start) / zoneSpan; // fraction where fade-out begins
+      const zoneSpan    = range.end - range.start;
+      const fadeInFrac  = (range.peakStart - range.start) / zoneSpan;
+      const holdEndFrac = (range.peakEnd   - range.start) / zoneSpan;
 
       return ScrollTrigger.create({
         trigger: "#parallax-container",
@@ -233,11 +224,9 @@ export default function TextOverlay() {
           let opacity: number;
 
           if (isZone1) {
-            // Zone 1: starts fully visible, holds, then fades out
             if      (p < holdEndFrac) opacity = 1;
             else                      opacity = (1 - p) / (1 - holdEndFrac);
           } else {
-            // Zones 2–6: fade-in → hold → fade-out using peakStart/peakEnd
             if      (p < fadeInFrac)  opacity = p / fadeInFrac;
             else if (p < holdEndFrac) opacity = 1;
             else                      opacity = (1 - p) / (1 - holdEndFrac);
@@ -245,7 +234,6 @@ export default function TextOverlay() {
 
           el.style.opacity = String(Math.max(0, Math.min(1, opacity)));
 
-          // Trigger reveal once when zone becomes visible
           if (!revealed && opacity > 0.3) {
             revealed = true;
             revealZone(el);
@@ -273,9 +261,8 @@ export default function TextOverlay() {
       {/* ══════════════════════════════════════════════════════════════════════
           ZONE 1 — CENTER — "Ada buah yang mengubah segalanya"
       ══════════════════════════════════════════════════════════════════════ */}
-      <div ref={z1} style={{ ...ZONE_BASE, justifyContent: "center" }}>
+      <div ref={z1} style={{ ...ZONE_BASE, justifyContent: "center", padding: "0 clamp(20px, 6vw, 80px)" }}>
         <div style={{ textAlign: "center" }}>
-          {/* H1 headline */}
           <Line>
             <span style={H1}>Ada buah</span>
           </Line>
@@ -285,18 +272,16 @@ export default function TextOverlay() {
             </span>
           </Line>
 
-          {/* Body */}
-          <div className="reveal-body" style={{ marginTop: "32px" }}>
+          <div className="reveal-body" style={{ marginTop: "24px" }}>
             <div style={BODY}>Tumbuh di Jawa. Diekspor ke dunia.</div>
             <div style={BODY}>Namun petaninya tidak pernah</div>
             <div style={BODY}>mendapat bagian yang adil.</div>
           </div>
 
-          {/* Scroll hint */}
           <div
             className="reveal-body"
             style={{
-              marginTop: "56px",
+              marginTop: isMobile ? "32px" : "56px",
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
@@ -328,17 +313,16 @@ export default function TextOverlay() {
       </div>
 
       {/* ══════════════════════════════════════════════════════════════════════
-          ZONE 2 — CENTER — "Rp 2,4 triliun" (dramatic number reveal)
+          ZONE 2 — CENTER — "Rp 2,4 triliun"
       ══════════════════════════════════════════════════════════════════════ */}
-      <div ref={z2} style={{ ...ZONE_BASE, justifyContent: "center" }}>
+      <div ref={z2} style={{ ...ZONE_BASE, justifyContent: "center", padding: "0 clamp(20px, 6vw, 80px)" }}>
         <div style={{ textAlign: "center", position: "relative" }}>
-          {/* Giant decorative "Rp" — faint background text */}
           <div
             aria-hidden="true"
             style={{
               fontFamily: "var(--font-cormorant)",
               fontWeight: 300,
-              fontSize: "clamp(120px, 18vw, 220px)",
+              fontSize: "clamp(80px, 18vw, 220px)",
               lineHeight: 0.8,
               color: "rgba(242,237,228,0.07)",
               letterSpacing: "-0.04em",
@@ -351,13 +335,12 @@ export default function TextOverlay() {
             Rp
           </div>
 
-          {/* Main number */}
           <Line>
             <span
               style={{
                 fontFamily: "var(--font-cormorant)",
                 fontWeight: 300,
-                fontSize: "clamp(52px, 7vw, 100px)",
+                fontSize: "clamp(36px, 7vw, 100px)",
                 lineHeight: 0.92,
                 letterSpacing: "-0.025em",
                 color: "#F2EDE4",
@@ -369,12 +352,11 @@ export default function TextOverlay() {
             </span>
           </Line>
 
-          {/* Sub-label */}
           <Line style={{ marginTop: "12px" }}>
             <span
               style={{
                 fontFamily: "var(--font-jetbrains)",
-                fontSize: "11px",
+                fontSize: isMobile ? "9px" : "11px",
                 letterSpacing: "0.2em",
                 color: "#B87333",
                 textShadow: TSB,
@@ -385,7 +367,6 @@ export default function TextOverlay() {
             </span>
           </Line>
 
-          {/* Body */}
           <div className="reveal-body" style={{ marginTop: "20px" }}>
             <div style={BODY}>Tidak ada yang transparan.</div>
             <div style={BODY}>Tidak ada yang adil.</div>
@@ -394,11 +375,17 @@ export default function TextOverlay() {
       </div>
 
       {/* ══════════════════════════════════════════════════════════════════════
-          ZONE 3 — RIGHT — "Petani menerima Rp 3.000 per kilo"
+          ZONE 3 — RIGHT (desktop) / CENTER (mobile) — "Petani menerima Rp 3.000 per kilo"
       ══════════════════════════════════════════════════════════════════════ */}
-      <div ref={z3} style={{ ...ZONE_BASE, justifyContent: "flex-end", paddingRight: "8vw" }}>
-        <div style={{ textAlign: "right" }}>
-          {/* Headline block 1 — farmer price */}
+      <div
+        ref={z3}
+        style={{
+          ...ZONE_BASE,
+          justifyContent: isMobile ? "center" : "flex-end",
+          padding: isMobile ? "0 clamp(20px, 6vw, 80px)" : "0 8vw",
+        }}
+      >
+        <div style={{ textAlign: isMobile ? "center" : "right" }}>
           <Line>
             <span style={H2}>Petani menerima</span>
           </Line>
@@ -408,15 +395,22 @@ export default function TextOverlay() {
             </span>
           </Line>
 
-          {/* Gold divider */}
-          <div className="reveal-body" style={{ margin: "24px 0 24px auto", width: "60px", height: "1px", background: "#B87333", opacity: 0 }} />
+          <div
+            className="reveal-body"
+            style={{
+              margin: isMobile ? "24px auto" : "24px 0 24px auto",
+              width: "60px",
+              height: "1px",
+              background: "#B87333",
+              opacity: 0,
+            }}
+          />
 
-          {/* Headline block 2 — export price */}
           <Line>
             <span
               style={{
                 ...H2,
-                fontSize: "clamp(28px, 4.5vw, 68px)",
+                fontSize: "clamp(20px, 4.5vw, 68px)",
                 color: "#F2EDE4",
               }}
             >
@@ -429,14 +423,13 @@ export default function TextOverlay() {
                 ...H2,
                 fontStyle: "italic",
                 color: "rgba(242,237,228,0.38)",
-                fontSize: "clamp(28px, 4.5vw, 68px)",
+                fontSize: "clamp(20px, 4.5vw, 68px)",
               }}
             >
               Rp 45.000.
             </span>
           </Line>
 
-          {/* Body */}
           <div className="reveal-body" style={{ marginTop: "20px" }}>
             <div style={BODY}>Lima belas kali lipat.</div>
             <div style={BODY}>Semua masuk ke tengkulak.</div>
@@ -445,9 +438,9 @@ export default function TextOverlay() {
       </div>
 
       {/* ══════════════════════════════════════════════════════════════════════
-          ZONE 4 — CENTER — "Bagaimana jika?" (hanging question)
+          ZONE 4 — CENTER — "Bagaimana jika?"
       ══════════════════════════════════════════════════════════════════════ */}
-      <div ref={z4} style={{ ...ZONE_BASE, justifyContent: "center" }}>
+      <div ref={z4} style={{ ...ZONE_BASE, justifyContent: "center", padding: "0 clamp(20px, 6vw, 80px)" }}>
         <div style={{ textAlign: "center" }}>
           <Line>
             <span style={H2}>Bagaimana jika</span>
@@ -463,14 +456,13 @@ export default function TextOverlay() {
             </span>
           </Line>
 
-          {/* Late-reveal answer — appears ~1.6s after headings */}
           <div
             className="reveal-body-late"
             style={{
               marginTop: "40px",
               fontFamily: "var(--font-syne)",
               fontWeight: 300,
-              fontSize: "15px",
+              fontSize: "clamp(13px, 1.4vw, 15px)",
               color: "rgba(242,237,228,0.38)",
               letterSpacing: "0.04em",
               textShadow: TSB,
@@ -482,16 +474,21 @@ export default function TextOverlay() {
       </div>
 
       {/* ══════════════════════════════════════════════════════════════════════
-          ZONE 5 — LEFT — "Daulat Salak" (product reveal)
+          ZONE 5 — LEFT (desktop) / CENTER (mobile) — "Daulat Salak"
       ══════════════════════════════════════════════════════════════════════ */}
-      <div ref={z5} style={{ ...ZONE_BASE, justifyContent: "flex-start", paddingLeft: "8vw" }}>
-        <div>
-          {/* Eyebrow */}
+      <div
+        ref={z5}
+        style={{
+          ...ZONE_BASE,
+          justifyContent: isMobile ? "center" : "flex-start",
+          padding: isMobile ? "0 clamp(20px, 6vw, 80px)" : "0 8vw",
+        }}
+      >
+        <div style={{ textAlign: isMobile ? "center" : "left" }}>
           <Line style={{ marginBottom: "8px" }}>
             <span style={EYEBROW}>Daulat Salak</span>
           </Line>
 
-          {/* Headlines */}
           <Line>
             <span style={H2}>1 kilogram salak.</span>
           </Line>
@@ -501,7 +498,6 @@ export default function TextOverlay() {
             </span>
           </Line>
 
-          {/* Body */}
           <div className="reveal-body" style={{ marginTop: "24px" }}>
             <div style={BODY}>Setiap token di-back buah nyata</div>
             <div style={BODY}>di gudang terverifikasi.</div>
@@ -509,10 +505,15 @@ export default function TextOverlay() {
             <div style={BODY}>Transparan untuk semua.</div>
           </div>
 
-          {/* Pills */}
           <div
             className="reveal-pills"
-            style={{ marginTop: "28px", display: "flex", gap: "10px", flexWrap: "wrap" }}
+            style={{
+              marginTop: "28px",
+              display: "flex",
+              gap: "10px",
+              flexWrap: "wrap",
+              justifyContent: isMobile ? "center" : "flex-start",
+            }}
           >
             {["15 ton / minggu", "On-chain", "Live"].map((pill) => (
               <span
@@ -540,15 +541,13 @@ export default function TextOverlay() {
       ══════════════════════════════════════════════════════════════════════ */}
       <div
         ref={z6}
-        style={{ ...ZONE_BASE, justifyContent: "center", pointerEvents: "none" }}
+        style={{ ...ZONE_BASE, justifyContent: "center", padding: "0 clamp(20px, 6vw, 80px)", pointerEvents: "none" }}
       >
         <div style={{ textAlign: "center", pointerEvents: "auto" }}>
-          {/* Eyebrow */}
           <Line style={{ marginBottom: "8px" }}>
             <span style={EYEBROW}>Bergabung</span>
           </Line>
 
-          {/* Headlines */}
           <Line>
             <span style={H2}>Jadilah bagian</span>
           </Line>
@@ -558,7 +557,6 @@ export default function TextOverlay() {
             </span>
           </Line>
 
-          {/* Body */}
           <div
             className="reveal-body"
             style={{
@@ -573,19 +571,24 @@ export default function TextOverlay() {
             <div style={BODY}>bagi yang menanamnya.</div>
           </div>
 
-          {/* CTA buttons */}
           <div
             className="reveal-pills"
-            style={{ display: "flex", gap: "16px", justifyContent: "center", alignItems: "center" }}
+            style={{
+              display: "flex",
+              flexDirection: isMobile ? "column" : "row",
+              gap: isMobile ? "12px" : "16px",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
           >
-            <MagneticButton />
+            <MagneticButton isMobile={isMobile} />
             <button
               style={{
                 background: "transparent",
                 color: "rgba(242,237,228,0.5)",
                 fontFamily: "var(--font-syne)",
                 fontWeight: 500,
-                fontSize: "13px",
+                fontSize: "clamp(12px, 1.2vw, 13px)",
                 padding: "16px 20px",
                 cursor: "none",
                 transition: "color 0.3s ease",
@@ -605,10 +608,11 @@ export default function TextOverlay() {
 }
 
 // ─── Magnetic primary CTA ─────────────────────────────────────────────────────
-function MagneticButton() {
+function MagneticButton({ isMobile }: { isMobile: boolean }) {
   const btnRef = useRef<HTMLButtonElement>(null);
 
   const onMove = (e: React.MouseEvent<HTMLButtonElement>) => {
+    if (isMobile) return;
     const btn = btnRef.current;
     if (!btn) return;
     const r = btn.getBoundingClientRect();
@@ -646,10 +650,11 @@ function MagneticButton() {
         textTransform: "uppercase",
         padding: "16px 44px",
         borderRadius: "2px",
-        cursor: "none",
+        cursor: isMobile ? "auto" : "none",
         transition: "background 0.3s ease",
         position: "relative",
         overflow: "hidden",
+        width: isMobile ? "100%" : "auto",
       }}
     >
       Masuk ke Ekosistem
