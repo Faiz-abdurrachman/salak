@@ -6,19 +6,20 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-// ─── Zone scroll ranges as fractions of the 900vh container ──────────────────
+// ─── Zone scroll ranges — 4-point opacity envelope (fractions of container) ───
+// start→peakStart: fade in   peakStart→peakEnd: hold at 1   peakEnd→end: fade out
 const ZONE_RANGES = [
-  { start: 0.00, end: 0.13 }, // Zone 1 — CENTER
-  { start: 0.15, end: 0.30 }, // Zone 2 — CENTER (big number)
-  { start: 0.32, end: 0.48 }, // Zone 3 — RIGHT
-  { start: 0.50, end: 0.64 }, // Zone 4 — CENTER (question)
-  { start: 0.66, end: 0.79 }, // Zone 5 — LEFT (reveal)
-  { start: 0.82, end: 1.00 }, // Zone 6 — CENTER (CTA)
+  { start: 0.00, peakStart: 0.03, peakEnd: 0.11, end: 0.15 }, // Zone 1
+  { start: 0.16, peakStart: 0.20, peakEnd: 0.28, end: 0.33 }, // Zone 2
+  { start: 0.34, peakStart: 0.38, peakEnd: 0.46, end: 0.51 }, // Zone 3
+  { start: 0.52, peakStart: 0.56, peakEnd: 0.63, end: 0.68 }, // Zone 4
+  { start: 0.69, peakStart: 0.73, peakEnd: 0.80, end: 0.85 }, // Zone 5
+  { start: 0.86, peakStart: 0.89, peakEnd: 0.97, end: 1.00 }, // Zone 6
 ] as const;
 
 // ─── Typography constants ─────────────────────────────────────────────────────
-const TSH = "0 0 120px rgba(8,8,6,1), 0 0 60px rgba(8,8,6,0.95), 0 2px 20px rgba(8,8,6,0.9)";
-const TSB = "0 0 120px rgba(8,8,6,1), 0 0 60px rgba(8,8,6,0.95), 0 2px 20px rgba(8,8,6,0.9)";
+const TSH = "0 1px 3px rgba(8,8,6,0.9), 0 2px 8px rgba(8,8,6,0.6)";
+const TSB = "0 1px 3px rgba(8,8,6,0.85), 0 2px 6px rgba(8,8,6,0.5)";
 
 const H1: React.CSSProperties = {
   fontFamily: "var(--font-cormorant)",
@@ -217,6 +218,11 @@ export default function TextOverlay() {
         (el as HTMLElement & { _tid?: ReturnType<typeof setTimeout> })._tid = tid;
       }
 
+      // Precompute normalized fade-in/hold-end fractions within the zone's [0,1] progress
+      const zoneSpan   = range.end - range.start;
+      const fadeInFrac = (range.peakStart - range.start) / zoneSpan; // fraction where opacity reaches 1
+      const holdEndFrac = (range.peakEnd  - range.start) / zoneSpan; // fraction where fade-out begins
+
       return ScrollTrigger.create({
         trigger: "#parallax-container",
         start: `top+=${toPx(range.start)} top`,
@@ -227,13 +233,14 @@ export default function TextOverlay() {
           let opacity: number;
 
           if (isZone1) {
-            // Zone 1: full opacity until last 20%, then fades out
-            opacity = p < 0.8 ? 1 : (1 - p) / 0.2;
+            // Zone 1: starts fully visible, holds, then fades out
+            if      (p < holdEndFrac) opacity = 1;
+            else                      opacity = (1 - p) / (1 - holdEndFrac);
           } else {
-            // Zones 2–6: fade-in first 20%, hold, fade-out last 20%
-            if      (p < 0.2) opacity = p / 0.2;
-            else if (p > 0.8) opacity = (1 - p) / 0.2;
-            else              opacity = 1;
+            // Zones 2–6: fade-in → hold → fade-out using peakStart/peakEnd
+            if      (p < fadeInFrac)  opacity = p / fadeInFrac;
+            else if (p < holdEndFrac) opacity = 1;
+            else                      opacity = (1 - p) / (1 - holdEndFrac);
           }
 
           el.style.opacity = String(Math.max(0, Math.min(1, opacity)));

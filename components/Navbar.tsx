@@ -1,11 +1,18 @@
 "use client";
 
+import { useState } from "react";
+
 interface NavbarProps {
   onMenuToggle: () => void;
   menuOpen: boolean;
 }
 
 export default function Navbar({ onMenuToggle, menuOpen }: NavbarProps) {
+  const [hamburgerHovered, setHamburgerHovered] = useState(false);
+
+  // Lines are gold when hovered OR when menu is open
+  const lineColor = hamburgerHovered || menuOpen ? "#B87333" : "#F2EDE4";
+
   return (
     <nav
       style={{
@@ -37,9 +44,11 @@ export default function Navbar({ onMenuToggle, menuOpen }: NavbarProps) {
         <span style={{ color: "#B87333" }}> SALAK</span>
       </div>
 
-      {/* Hamburger — always visible */}
+      {/* Hamburger */}
       <button
         onClick={onMenuToggle}
+        onMouseEnter={() => setHamburgerHovered(true)}
+        onMouseLeave={() => setHamburgerHovered(false)}
         aria-label="Toggle menu"
         style={{
           background: "transparent",
@@ -56,8 +65,8 @@ export default function Navbar({ onMenuToggle, menuOpen }: NavbarProps) {
             display: "block",
             width: "24px",
             height: "1px",
-            background: "#F2EDE4",
-            transition: "transform 0.35s cubic-bezier(0.16,1,0.3,1)",
+            background: lineColor,
+            transition: "transform 0.35s cubic-bezier(0.16,1,0.3,1), background 0.25s ease",
             transform: menuOpen ? "translateY(4px) rotate(45deg)" : "none",
           }}
         />
@@ -66,8 +75,8 @@ export default function Navbar({ onMenuToggle, menuOpen }: NavbarProps) {
             display: "block",
             width: "24px",
             height: "1px",
-            background: "#F2EDE4",
-            transition: "transform 0.35s cubic-bezier(0.16,1,0.3,1)",
+            background: lineColor,
+            transition: "transform 0.35s cubic-bezier(0.16,1,0.3,1), background 0.25s ease",
             transform: menuOpen ? "translateY(-4px) rotate(-45deg)" : "none",
           }}
         />

@@ -68,26 +68,48 @@ export default function SalakCanvas() {
       frames[i] = img;
     }
 
-    // Drive frame index from scroll via GSAP
-    // trigger = #parallax-container (the 900vh outer div in page.tsx)
-    // scrub 0.5 = smooth catch-up
-    const anim = gsap.to(frameObj.current, {
-      frame: TOTAL_FRAMES - 1,
-      snap: "frame",
-      ease: "none",
-      scrollTrigger: {
-        trigger: "#parallax-container",
-        start: "top top",
-        end: "bottom bottom",
-        scrub: 0.5,
+    // Custom non-linear frame mapping:
+    //   scroll  0%-30%  → frames   0-99   (slow salak reveal)
+    //   scroll 30%-75%  → frames 100-399  (main journey)
+    //   scroll 75%-100% → frames 400-575  (explosion / opening)
+    function progressToFrame(p: number): number {
+      if (p <= 0.30) {
+        return Math.round((p / 0.30) * 99);
+      } else if (p <= 0.75) {
+        return Math.round(100 + ((p - 0.30) / 0.45) * 299);
+      } else {
+        return Math.round(400 + ((p - 0.75) / 0.25) * 175);
+      }
+    }
+
+    const targetRef = { frame: 0 };
+
+    // ScrollTrigger sets the target frame via custom mapping
+    const st = ScrollTrigger.create({
+      trigger: "#parallax-container",
+      start: "top top",
+      end: "bottom bottom",
+      onUpdate(self) {
+        targetRef.frame = progressToFrame(self.progress);
       },
-      onUpdate: () => drawFrame(Math.round(frameObj.current.frame)),
+    });
+
+    // GSAP ticker lerps current frame towards target and redraws
+    const ticker = gsap.ticker.add(() => {
+      const cur = frameObj.current.frame;
+      const tgt = targetRef.frame;
+      if (Math.abs(tgt - cur) < 0.5) {
+        frameObj.current.frame = tgt;
+      } else {
+        frameObj.current.frame += (tgt - cur) * 0.1;
+      }
+      drawFrame(Math.round(frameObj.current.frame));
     });
 
     return () => {
       window.removeEventListener("resize", resize);
-      anim.scrollTrigger?.kill();
-      anim.kill();
+      st.kill();
+      gsap.ticker.remove(ticker);
     };
   }, []);
 

@@ -26,9 +26,9 @@ export default function Home() {
       <SmoothScroll />
       <LoadingScreen onComplete={() => {}} />
       <Navbar onMenuToggle={toggleMenu} menuOpen={menuOpen} />
-      <FullscreenMenu open={menuOpen} />
+      <FullscreenMenu open={menuOpen} onClose={toggleMenu} />
 
-      {/* ── 900vh parallax scroll container ──────────────────────────────── */}
+      {/* ── 1100vh parallax scroll container ─────────────────────────────── */}
       {/*
         Structure:
           #parallax-container  (900vh, position:relative)
@@ -45,7 +45,7 @@ export default function Home() {
       */}
       <div
         id="parallax-container"
-        style={{ height: "900vh", position: "relative", background: "#080806" }}
+        style={{ height: "1100vh", position: "relative", background: "#080806" }}
       >
         {/* Sticky canvas + overlays */}
         <div
