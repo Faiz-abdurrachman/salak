@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useBreakpoint } from "@/hooks/useBreakpoint";
+import { useRouter } from "next/navigation";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -598,6 +599,7 @@ export default function TextOverlay() {
               }}
               onMouseEnter={(e) => { e.currentTarget.style.color = "#FFFFFF"; }}
               onMouseLeave={(e) => { e.currentTarget.style.color = "rgba(242,237,228,0.85)"; }}
+              onClick={() => { window.location.href = '/token#tokenomics'; }}
             >
               Pelajari Lebih Lanjut →
             </button>

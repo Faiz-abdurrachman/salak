@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { useBreakpoint } from "@/hooks/useBreakpoint";
 
 interface NavbarProps {
@@ -20,10 +21,9 @@ export default function Navbar({ onMenuToggle, menuOpen }: NavbarProps) {
     <nav
       style={{
         position: "fixed",
-        top: 0,
+        top: isMobile ? "16px" : "32px",
         left: 0,
         right: 0,
-        height: isMobile ? "48px" : "56px",
         zIndex: 100,
         display: "flex",
         alignItems: "center",
@@ -32,19 +32,31 @@ export default function Navbar({ onMenuToggle, menuOpen }: NavbarProps) {
         background: "transparent",
       }}
     >
-      {/* Wordmark */}
-      <div
-        style={{
-          fontFamily: "var(--font-syne)",
-          fontWeight: 800,
-          fontSize: isMobile ? "11px" : "13px",
-          letterSpacing: "0.22em",
-          lineHeight: 1,
-          textShadow: "0 2px 20px rgba(8,8,6,0.8)",
-        }}
-      >
-        <span style={{ color: "#F2EDE4" }}>DAULAT</span>
-        <span style={{ color: "#B87333" }}> SALAK</span>
+      {/* Logo & Wordmark */}
+      <div style={{ display: "flex", alignItems: "center", gap: "20px", pointerEvents: "auto" }}>
+        {/* Transparent Logo */}
+        <div style={{ position: "relative", width: isMobile ? "42px" : "60px", height: isMobile ? "42px" : "60px", flexShrink: 0 }}>
+          <Image
+            src="/logo-transparan.png"
+            alt="Daulat Salak Logo"
+            fill
+            style={{ objectFit: "contain", objectPosition: "center" }}
+            priority
+          />
+        </div>
+        <div
+          style={{
+            fontFamily: "var(--font-syne)",
+            fontWeight: 800,
+            fontSize: isMobile ? "14px" : "20px",
+            letterSpacing: "0.22em",
+            lineHeight: 1,
+            textShadow: "0 2px 20px rgba(8,8,6,0.8)",
+          }}
+        >
+          <span style={{ color: "#F2EDE4" }}>DAULAT</span>
+          <span style={{ color: "#B87333" }}> SALAK</span>
+        </div>
       </div>
 
       {/* Hamburger */}
