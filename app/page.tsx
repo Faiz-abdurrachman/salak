@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useCallback } from "react";
+import Link from "next/link";
 import dynamic from "next/dynamic";
 import { useBreakpoint } from "@/hooks/useBreakpoint";
 
@@ -95,6 +96,14 @@ export default function Home() {
         {/* Text zones — each sticky, stacked on canvas via marginTop:-100vh */}
         {/* Opacity for each zone is driven by GSAP ScrollTrigger in TextOverlay */}
         <TextOverlay />
+      </div>
+
+      <div style={{ textAlign: "center", padding: "10vh 0" }}>
+        <div style={{ fontFamily: "var(--font-jetbrains)", fontSize: "11px", letterSpacing: "0.2em", color: "#B87333", marginBottom: "24px" }}>READY TO EXPLORE?</div>
+        <Link href="/hub" style={{ 
+          display: "inline-block", background: "#B87333", color: "#060605", padding: "16px 40px", 
+          fontFamily: "var(--font-syne)", fontWeight: 700, fontSize: "13px", letterSpacing: "0.1em", textDecoration: "none"
+        }}>ENTER PROTOCOL HUB</Link>
       </div>
 
       {/* ── Footer — OUTSIDE container, plain document flow ──────────────── */}

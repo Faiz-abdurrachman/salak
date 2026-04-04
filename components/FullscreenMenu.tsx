@@ -8,7 +8,11 @@ interface FullscreenMenuProps {
   onClose: () => void;
 }
 
-const menuLinks = ["Token", "Marketplace", "Whitepaper", "Tentang Kami"];
+const menuLinks = [
+  { label: "Home", href: "/home" },
+  { label: "Product", href: "/product" },
+  { label: "Marketplace", href: "/marketplace" },
+];
 const socials = ["X / Twitter", "Telegram", "Discord", "GitHub"];
 
 export default function FullscreenMenu({ open, onClose }: FullscreenMenuProps) {
@@ -131,8 +135,8 @@ export default function FullscreenMenu({ open, onClose }: FullscreenMenuProps) {
           >
             {menuLinks.map((link) => (
               <a
-                key={link}
-                href="#"
+                key={link.label}
+                href={link.href}
                 className="menu-link-wrap"
                 style={{
                   position: "relative",
@@ -147,8 +151,8 @@ export default function FullscreenMenu({ open, onClose }: FullscreenMenuProps) {
                   letterSpacing: "-0.02em",
                 }}
               >
-                {link}
-                <span className="menu-link-inner">{link}</span>
+                {link.label}
+                <span className="menu-link-inner">{link.label}</span>
               </a>
             ))}
           </nav>

@@ -19,14 +19,14 @@ const ZONE_RANGES = [
 ] as const;
 
 // ─── Typography constants ─────────────────────────────────────────────────────
-const TSH = "0 1px 3px rgba(8,8,6,0.9), 0 2px 8px rgba(8,8,6,0.6)";
-const TSB = "0 1px 3px rgba(8,8,6,0.85), 0 2px 6px rgba(8,8,6,0.5)";
+const TSH = "0 2px 10px rgba(8,8,6,0.7), 0 10px 40px rgba(8,8,6,0.5)";
+const TSB = "0 2px 6px rgba(8,8,6,0.8), 0 4px 16px rgba(8,8,6,0.4)";
 
 const H1: React.CSSProperties = {
   fontFamily: "var(--font-cormorant)",
-  fontWeight: 300,
+  fontWeight: 400,
   fontSize: "clamp(36px, 8vw, 140px)",
-  lineHeight: 0.9,
+  lineHeight: 1.15,
   letterSpacing: "-0.03em",
   color: "#F2EDE4",
   textShadow: TSH,
@@ -35,9 +35,9 @@ const H1: React.CSSProperties = {
 
 const H2: React.CSSProperties = {
   fontFamily: "var(--font-cormorant)",
-  fontWeight: 300,
+  fontWeight: 400,
   fontSize: "clamp(28px, 6vw, 96px)",
-  lineHeight: 0.92,
+  lineHeight: 1.15,
   letterSpacing: "-0.025em",
   color: "#F2EDE4",
   textShadow: TSH,
@@ -46,20 +46,21 @@ const H2: React.CSSProperties = {
 
 const EYEBROW: React.CSSProperties = {
   fontFamily: "var(--font-jetbrains)",
-  fontSize: "10px",
+  fontSize: "11px",
+  fontWeight: 600,
   letterSpacing: "0.2em",
   textTransform: "uppercase",
-  color: "#B87333",
+  color: "#D4956A",
   textShadow: TSB,
   display: "block",
 };
 
 const BODY: React.CSSProperties = {
   fontFamily: "var(--font-syne)",
-  fontWeight: 300,
-  fontSize: "clamp(13px, 1.8vw, 18px)",
-  lineHeight: 1.75,
-  color: "rgba(242,237,228,0.42)",
+  fontWeight: 500,
+  fontSize: "clamp(14px, 1.8vw, 19px)",
+  lineHeight: 1.6,
+  color: "rgba(242,237,228,0.95)",
   textShadow: TSB,
 };
 
@@ -90,9 +91,8 @@ function Line({
   return (
     <div
       style={{
-        overflow: "hidden",
+        clipPath: "inset(-20% 0 -35% 0)",
         display: "block",
-        paddingBottom: "0.06em",
         ...style,
       }}
     >
@@ -100,7 +100,7 @@ function Line({
         className={`reveal-line${className ? " " + className : ""}`}
         style={{
           display: "block",
-          transform: "translateY(108%)",
+          transform: "translateY(135%)",
           willChange: "transform",
         }}
       >
@@ -291,8 +291,9 @@ export default function TextOverlay() {
             <div
               style={{
                 fontFamily: "var(--font-jetbrains)",
-                fontSize: "10px",
-                color: "rgba(242,237,228,0.38)",
+                fontSize: "11px",
+                fontWeight: 600,
+                color: "rgba(242,237,228,0.85)",
                 letterSpacing: "0.14em",
                 textShadow: TSB,
                 animation: "pulseOpacity 2.4s ease infinite",
@@ -422,7 +423,7 @@ export default function TextOverlay() {
               style={{
                 ...H2,
                 fontStyle: "italic",
-                color: "rgba(242,237,228,0.38)",
+                color: "rgba(242,237,228,0.85)",
                 fontSize: "clamp(20px, 4.5vw, 68px)",
               }}
             >
@@ -461,9 +462,9 @@ export default function TextOverlay() {
             style={{
               marginTop: "40px",
               fontFamily: "var(--font-syne)",
-              fontWeight: 300,
-              fontSize: "clamp(13px, 1.4vw, 15px)",
-              color: "rgba(242,237,228,0.38)",
+              fontWeight: 500,
+              fontSize: "clamp(14px, 1.5vw, 17px)",
+              color: "rgba(242,237,228,0.85)",
               letterSpacing: "0.04em",
               textShadow: TSB,
             }}
@@ -585,18 +586,18 @@ export default function TextOverlay() {
             <button
               style={{
                 background: "transparent",
-                color: "rgba(242,237,228,0.5)",
+                color: "rgba(242,237,228,0.85)",
                 fontFamily: "var(--font-syne)",
-                fontWeight: 500,
-                fontSize: "clamp(12px, 1.2vw, 13px)",
+                fontWeight: 600,
+                fontSize: "clamp(13px, 1.3vw, 14px)",
                 padding: "16px 20px",
                 cursor: "none",
                 transition: "color 0.3s ease",
                 textShadow: TSB,
                 border: "none",
               }}
-              onMouseEnter={(e) => { e.currentTarget.style.color = "#F2EDE4"; }}
-              onMouseLeave={(e) => { e.currentTarget.style.color = "rgba(242,237,228,0.5)"; }}
+              onMouseEnter={(e) => { e.currentTarget.style.color = "#FFFFFF"; }}
+              onMouseLeave={(e) => { e.currentTarget.style.color = "rgba(242,237,228,0.85)"; }}
             >
               Pelajari Lebih Lanjut →
             </button>

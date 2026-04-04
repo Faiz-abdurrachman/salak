@@ -64,12 +64,22 @@ export default function SalakCanvas() {
     framesRef.current = frames;
     let firstLoaded = false;
 
+    const handleLoad = () => {
+      if (!firstLoaded) {
+        firstLoaded = true;
+        drawFrame(Math.round(curFrame.current));
+        ScrollTrigger.refresh();
+      }
+    };
+
     for (let i = 0; i < TOTAL_FRAMES; i++) {
       const img = new Image();
       img.src = `/sequence/${String(i + 1).padStart(3, "0")}.webp`;
-      img.onload = () => {
-        if (!firstLoaded) { firstLoaded = true; drawFrame(0); }
-      };
+      if (img.complete) {
+        handleLoad();
+      } else {
+        img.onload = handleLoad;
+      }
       frames[i] = img;
     }
 

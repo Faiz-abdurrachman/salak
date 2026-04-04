@@ -14,6 +14,13 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
   const startTimeRef = useRef<number | null>(null);
 
   useEffect(() => {
+    if (sessionStorage.getItem("daulat-loaded")) {
+      setVisible(false);
+      onComplete();
+      return;
+    }
+    
+    sessionStorage.setItem("daulat-loaded", "true");
     const TOTAL_FRAMES = 576;
     const DURATION = 3200;
 
