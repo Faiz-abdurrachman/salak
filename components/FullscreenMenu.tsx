@@ -9,9 +9,11 @@ interface FullscreenMenuProps {
 }
 
 const menuLinks = [
-  { label: "Home", href: "/home" },
-  { label: "Product", href: "/product" },
-  { label: "Marketplace", href: "/marketplace" },
+  { nama: 'Beranda', href: '/' },
+  { nama: 'Token', href: '/token' },
+  { nama: 'Ekosistem', href: '/hub' },
+  { nama: 'Marketplace', href: '/marketplace' },
+  { nama: 'Petani', href: '/petani' },
 ];
 const socials = ["X / Twitter", "Telegram", "Discord", "GitHub"];
 
@@ -135,7 +137,7 @@ export default function FullscreenMenu({ open, onClose }: FullscreenMenuProps) {
           >
             {menuLinks.map((link) => (
               <a
-                key={link.label}
+                key={link.nama}
                 href={link.href}
                 className="menu-link-wrap"
                 style={{
@@ -151,8 +153,8 @@ export default function FullscreenMenu({ open, onClose }: FullscreenMenuProps) {
                   letterSpacing: "-0.02em",
                 }}
               >
-                {link.label}
-                <span className="menu-link-inner">{link.label}</span>
+                {link.nama}
+                <span className="menu-link-inner">{link.nama}</span>
               </a>
             ))}
           </nav>

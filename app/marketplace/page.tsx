@@ -1,7 +1,16 @@
 "use client"
-import React, { useState } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
+import dynamic from 'next/dynamic'
+
+const Navbar = dynamic(() => import('@/components/Navbar'), { ssr: false })
+const FullscreenMenu = dynamic(() => import('@/components/FullscreenMenu'), { ssr: false })
+const Cursor = dynamic(() => import('@/components/Cursor'), { ssr: false })
+const SmoothScroll = dynamic(() => import('@/components/SmoothScroll'), { ssr: false })
+import Footer from '@/components/Footer'
 
 export default function MarketplacePage() {
+  const [menuOpen, setMenuOpen] = useState(false)
+  const toggleMenu = useCallback(() => setMenuOpen((v) => !v), [])
   const listings = [
     {
       id: 1,
@@ -97,66 +106,10 @@ export default function MarketplacePage() {
         }
       `}</style>
 
-      {/* NAVBAR */}
-      <div style={{
-        position: 'fixed',
-        top: 0,
-        width: '100%',
-        zIndex: 100,
-        height: '56px',
-        padding: '0 60px',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        background: 'rgba(8,8,6,0.9)',
-        backdropFilter: 'blur(20px)',
-        borderBottom: '0.5px solid rgba(255,255,255,0.04)'
-      }}>
-        {/* Kiri */}
-        <div style={{ fontFamily: 'var(--font-jetbrains)', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.2em', color: '#F2EDE4', opacity: 0.6 }}>
-          DAULAT SALAK
-        </div>
-        
-        {/* Tengah */}
-        <div style={{ display: 'flex', gap: '40px' }}>
-          {[
-            { n: 'EKOSISTEM', act: false, href: '/hub' },
-            { n: 'MARKETPLACE', act: true, href: '/marketplace' },
-            { n: 'PETANI', act: false, href: '/petani' },
-            { n: 'TOKEN', act: false, href: '/token' }
-          ].map(link => (
-            <div 
-              key={link.n}
-              onClick={() => window.location.href = link.href}
-              style={{
-                fontFamily: 'var(--font-jetbrains)', fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.15em', cursor: 'pointer',
-                color: link.act ? '#D4956A' : 'rgba(242,237,228,0.25)'
-              }}
-            >
-              {link.n}
-            </div>
-          ))}
-        </div>
-
-        {/* Kanan */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-            <div style={{ width: '4px', height: '4px', borderRadius: '50%', background: '#22c55e', animation: 'pulseDot 2s infinite' }} />
-            <div style={{ fontFamily: 'var(--font-jetbrains)', fontSize: '9px', textTransform: 'uppercase', letterSpacing: '0.15em', color: '#22c55e' }}>
-              LIVE
-            </div>
-          </div>
-          <button 
-            onClick={() => window.location.href = '/buy'}
-            style={{
-              background: 'rgba(184,115,51,0.85)', color: '#080806', fontFamily: 'var(--font-jetbrains)', fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.15em',
-              padding: '8px 18px', borderRadius: '2px', border: 'none', cursor: 'pointer'
-            }}
-          >
-            BELI $SALAK
-          </button>
-        </div>
-      </div>
+      <Cursor />
+      <SmoothScroll />
+      <Navbar onMenuToggle={toggleMenu} menuOpen={menuOpen} />
+      <FullscreenMenu open={menuOpen} onClose={toggleMenu} />
 
       {/* SECTION 1 — HERO */}
       <section style={{
@@ -437,18 +390,9 @@ export default function MarketplacePage() {
           </button>
         </div>
 
-        <div style={{ width: '100%', height: '0.5px', background: 'rgba(255,255,255,0.04)', marginTop: '64px', marginBottom: '28px' }} />
-
-        <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%', flexWrap: 'wrap', gap: '16px' }}>
-          <div style={{ fontFamily: 'var(--font-jetbrains)', fontSize: '8px', opacity: 0.12 }}>
-            &copy; 2026 Daulat Salak &middot; B2B Marketplace
-          </div>
-          <div style={{ fontFamily: 'var(--font-jetbrains)', fontSize: '8px', opacity: 0.1, letterSpacing: '0.12em' }}>
-            POLYGON NETWORK &middot; ERC-20
-          </div>
-        </div>
       </section>
 
+      <Footer />
     </main>
   )
 }

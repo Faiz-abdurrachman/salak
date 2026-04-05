@@ -1,10 +1,19 @@
 "use client"
-import React from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
+import dynamic from 'next/dynamic'
+
+const Navbar = dynamic(() => import('@/components/Navbar'), { ssr: false })
+const FullscreenMenu = dynamic(() => import('@/components/FullscreenMenu'), { ssr: false })
+const Cursor = dynamic(() => import('@/components/Cursor'), { ssr: false })
+const SmoothScroll = dynamic(() => import('@/components/SmoothScroll'), { ssr: false })
+import Footer from '@/components/Footer'
 import Image from 'next/image'
 import clusterBg from '../../background/layer-3-cluster.jpg'
 import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts'
 
 export default function HubPage() {
+  const [menuOpen, setMenuOpen] = useState(false)
+  const toggleMenu = useCallback(() => setMenuOpen((v) => !v), [])
   const priceData = [
     { date: '1 Mar', petani: 100, ekspor: 100, token: 100 },
     { date: '5 Mar', petani: 97, ekspor: 103, token: 104 },
@@ -44,66 +53,10 @@ export default function HubPage() {
         }
       `}</style>
       
-      {/* 1. NAVBAR - PERTAHANKAN PERSIS */}
-      <div style={{
-        position: 'fixed',
-        top: 0,
-        width: '100%',
-        zIndex: 100,
-        height: '56px',
-        padding: '0 60px',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        background: 'rgba(8,8,6,0.9)',
-        backdropFilter: 'blur(20px)',
-        borderBottom: '0.5px solid rgba(255,255,255,0.04)'
-      }}>
-        {/* Kiri */}
-        <div style={{ fontFamily: 'var(--font-jetbrains)', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.2em', color: 'rgba(242,237,228,0.6)' }}>
-          DAULAT SALAK
-        </div>
-        
-        {/* Tengah */}
-        <div style={{ display: 'flex', gap: '40px' }}>
-          {[
-            { n: 'EKOSISTEM', act: true, href: '#' },
-            { n: 'MARKETPLACE', act: false, href: '/marketplace' },
-            { n: 'PETANI', act: false, href: '/petani' },
-            { n: 'TOKEN', act: false, href: '/token' }
-          ].map(link => (
-            <div 
-              key={link.n}
-              onClick={() => { if(link.href !== '#') window.location.href = link.href }}
-              style={{
-                fontFamily: 'var(--font-jetbrains)', fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.15em', cursor: 'pointer',
-                color: link.act ? '#D4956A' : 'rgba(242,237,228,0.25)'
-              }}
-            >
-              {link.n}
-            </div>
-          ))}
-        </div>
-
-        {/* Kanan */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-            <div style={{ width: '5px', height: '5px', borderRadius: '50%', background: '#22c55e', animation: 'pulseDot 2s infinite' }} />
-            <div style={{ fontFamily: 'var(--font-jetbrains)', fontSize: '9px', textTransform: 'uppercase', letterSpacing: '0.15em', color: 'rgba(34,197,94,0.6)' }}>
-              LIVE
-            </div>
-          </div>
-          <button 
-            onClick={() => window.location.href = '/buy'}
-            style={{
-              background: 'rgba(184,115,51,0.85)', color: '#080806', fontFamily: 'var(--font-jetbrains)', fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.15em',
-              padding: '8px 18px', borderRadius: '2px', border: 'none', cursor: 'pointer'
-            }}
-          >
-            Beli $SALAK
-          </button>
-        </div>
-      </div>
+      <Cursor />
+      <SmoothScroll />
+      <Navbar onMenuToggle={toggleMenu} menuOpen={menuOpen} />
+      <FullscreenMenu open={menuOpen} onClose={toggleMenu} />
 
       {/* 2. HERO SECTION */}
       <section style={{
@@ -634,41 +587,9 @@ export default function HubPage() {
           </button>
         </div>
 
-        {/* DIVIDER */}
-        <div style={{ marginTop: '80px', marginBottom: '32px', width: '100%', height: '0.5px', background: 'rgba(255,255,255,0.04)' }} />
-
-        {/* FOOTER BOTTOM */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', flexWrap: 'wrap', gap: '16px' }}>
-          {/* Kiri */}
-          <div style={{ fontFamily: 'var(--font-jetbrains)', fontSize: '8px', opacity: 0.12, letterSpacing: '0.1em' }}>
-            &copy; 2026 Daulat Salak &middot; $PetaniRakyat-DS3
-          </div>
-
-          {/* Tengah */}
-          <div style={{ display: 'flex', gap: '32px', flexWrap: 'wrap', justifyContent: 'center' }}>
-            {[
-              { n: 'EKOSISTEM', h: '#' },
-              { n: 'TOKEN', h: '/token' },
-              { n: 'MARKETPLACE', h: '/marketplace' },
-              { n: 'PETANI', h: '/petani' }
-            ].map(l => (
-              <div 
-                key={l.n} 
-                onClick={() => { if(l.h !== '#') window.location.href = l.h }}
-                style={{ fontFamily: 'var(--font-jetbrains)', fontSize: '8px', opacity: 0.15, letterSpacing: '0.15em', cursor: 'pointer', textTransform: 'uppercase' }}
-              >
-                {l.n}
-              </div>
-            ))}
-          </div>
-
-          {/* Kanan */}
-          <div style={{ fontFamily: 'var(--font-jetbrains)', fontSize: '8px', opacity: 0.1, letterSpacing: '0.12em', textAlign: 'right' }}>
-            POLYGON NETWORK &middot; ERC-20
-          </div>
-        </div>
       </section>
 
+      <Footer />
     </main>
   )
 }

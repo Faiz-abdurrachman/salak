@@ -99,11 +99,11 @@ export default function Home() {
       </div>
 
       <div style={{ textAlign: "center", padding: "10vh 0" }}>
-        <div style={{ fontFamily: "var(--font-jetbrains)", fontSize: "11px", letterSpacing: "0.2em", color: "#B87333", marginBottom: "24px" }}>READY TO EXPLORE?</div>
+        <div style={{ fontFamily: "var(--font-jetbrains)", fontSize: "11px", letterSpacing: "0.2em", color: "#B87333", marginBottom: "24px" }}>SIAP MENJELAJAH?</div>
         <Link href="/hub" style={{ 
           display: "inline-block", background: "#B87333", color: "#060605", padding: "16px 40px", 
           fontFamily: "var(--font-syne)", fontWeight: 700, fontSize: "13px", letterSpacing: "0.1em", textDecoration: "none"
-        }}>ENTER PROTOCOL HUB</Link>
+        }}>MASUK KE EKOSISTEM</Link>
       </div>
 
       {/* ── Footer — OUTSIDE container, plain document flow ──────────────── */}
