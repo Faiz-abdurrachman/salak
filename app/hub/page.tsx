@@ -24,6 +24,12 @@ export default function HubPage() {
     { type: 'EKSPOR', desc: 'Pengiriman ke Hongkong — batch mingguan', amount: '5.000 kg', time: '3 jam lalu', hash: '0x1b7c...4e3d', positive: true },
   ]
 
+  const destinations = [
+    { negara: 'Singapura', pembeli: 'Changi Cold Storage', volume: '6 ton', frekuensi: 'setiap minggu', status: 'AKTIF' },
+    { negara: 'Malaysia', pembeli: 'Kuala Lumpur Fresh Market', volume: '5 ton', frekuensi: 'setiap minggu', status: 'AKTIF' },
+    { negara: 'Hongkong', pembeli: 'HK Premium Fruits Ltd', volume: '4 ton', frekuensi: 'setiap 2 minggu', status: 'AKTIF' },
+  ]
+
   return (
     <main style={{
       background: '#080806',
@@ -512,6 +518,165 @@ export default function HubPage() {
           </div>
           <div style={{ fontFamily: 'var(--font-jetbrains)', fontSize: '9px', color: 'rgba(184,115,51,0.4)', cursor: 'pointer' }}>
             Lihat semua di blockchain explorer &rarr;
+          </div>
+        </div>
+      </section>
+
+      {/* 7. SECTION 5: EKSPOR ACTIVITY */}
+      <section style={{ background: '#080806', padding: '0 60px 96px', borderTop: 'none', marginTop: 0 }}>
+        <div style={{ display: 'flex', gap: '80px', flexWrap: 'wrap' }}>
+          
+          {/* KOLOM KIRI */}
+          <div style={{ flex: 1, minWidth: '300px' }}>
+            <div style={{ fontFamily: 'var(--font-jetbrains)', fontSize: '8px', letterSpacing: '0.2em', opacity: 0.2, marginBottom: '16px', textTransform: 'uppercase' }}>
+              SECTION 05 &middot; EKSPOR AKTIF
+            </div>
+            <div style={{ fontFamily: 'var(--font-cormorant)', fontWeight: 300, fontSize: 'clamp(48px, 5vw, 72px)', color: '#F2EDE4', lineHeight: 0.9 }}>
+              15 ton per minggu,
+            </div>
+            <div style={{ fontFamily: 'var(--font-cormorant)', fontWeight: 300, fontSize: 'clamp(48px, 5vw, 72px)', color: 'rgba(242,237,228,0.4)', lineHeight: 0.9, fontStyle: 'italic' }}>
+              ke 3 negara.
+            </div>
+            <div style={{ marginTop: '24px', fontFamily: 'var(--font-syne)', fontSize: '13px', color: 'rgba(242,237,228,0.3)', lineHeight: 1.8, maxWidth: '360px' }}>
+              Salak dari petani Sleman dan Magelang diekspor langsung ke pasar Asia &mdash; tanpa perantara berlebih, harga transparan tercatat on-chain.
+            </div>
+            <div style={{ marginTop: '40px' }}>
+              <div style={{ fontFamily: 'var(--font-cormorant)', fontWeight: 300, fontSize: 'clamp(36px, 4vw, 52px)', color: '#D4956A', lineHeight: 1 }}>
+                780 ton
+              </div>
+              <div style={{ fontFamily: 'var(--font-jetbrains)', fontSize: '9px', opacity: 0.2, marginTop: '8px' }}>
+                total ekspor tahun ini
+              </div>
+            </div>
+          </div>
+
+          {/* KOLOM KANAN */}
+          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', minWidth: '300px' }}>
+            {destinations.map(dst => (
+              <div key={dst.negara} style={{ borderBottom: '0.5px solid rgba(255,255,255,0.04)', padding: '28px 0' }}>
+                {/* Baris 1 */}
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <div style={{ fontFamily: 'var(--font-cormorant)', fontWeight: 300, fontSize: '28px', color: '#F2EDE4' }}>
+                    {dst.negara}
+                  </div>
+                  <div style={{ border: '0.5px solid rgba(184,115,51,0.3)', padding: '3px 10px', borderRadius: '2px', fontFamily: 'var(--font-jetbrains)', fontSize: '8px', color: 'rgba(184,115,51,0.6)', letterSpacing: '0.15em' }}>
+                    {dst.status}
+                  </div>
+                </div>
+                {/* Baris 2 */}
+                <div style={{ marginTop: '8px', fontFamily: 'var(--font-syne)', fontSize: '12px', opacity: 0.3 }}>
+                  {dst.pembeli}
+                </div>
+                {/* Baris 3 */}
+                <div style={{ marginTop: '12px', display: 'flex', gap: '24px' }}>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
+                    <div style={{ fontFamily: 'var(--font-jetbrains)', fontSize: '13px', color: '#D4956A' }}>{dst.volume}</div>
+                    <div style={{ fontFamily: 'var(--font-jetbrains)', fontSize: '8px', opacity: 0.15 }}>volume/pengiriman</div>
+                  </div>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
+                    <div style={{ fontFamily: 'var(--font-jetbrains)', fontSize: '13px', color: '#F2EDE4', opacity: 0.6 }}>{dst.frekuensi}</div>
+                    <div style={{ fontFamily: 'var(--font-jetbrains)', fontSize: '8px', opacity: 0.15 }}>frekuensi</div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+          
+        </div>
+
+        {/* FOOTER marginTop 48px */}
+        <div style={{ marginTop: '48px', borderTop: '0.5px solid rgba(255,255,255,0.04)', paddingTop: '24px', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '16px' }}>
+          <div style={{ fontFamily: 'var(--font-jetbrains)', fontSize: '8px', opacity: 0.15 }}>
+            Data ekspor diverifikasi customs & oracle on-chain &middot; Update real-time
+          </div>
+          <div style={{ fontFamily: 'var(--font-jetbrains)', fontSize: '8px', opacity: 0.12, textAlign: 'right' }}>
+            Total 3 destinasi aktif &middot; Asia Tenggara &amp; Asia Timur
+          </div>
+        </div>
+      </section>
+
+      {/* 8. SECTION 6: CTA FOOTER */}
+      <section style={{
+        background: '#080806',
+        padding: '120px 60px',
+        borderTop: '0.5px solid rgba(255,255,255,0.06)',
+        textAlign: 'center',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        gap: 0
+      }}>
+        {/* EYEBROW */}
+        <div style={{ fontFamily: 'var(--font-jetbrains)', fontSize: '8px', letterSpacing: '0.25em', opacity: 0.15, marginBottom: '24px', textTransform: 'uppercase' }}>
+          DAULAT SALAK &middot; EKOSISTEM TOKENISASI SALAK INDONESIA
+        </div>
+
+        {/* HEADING */}
+        <div style={{ fontFamily: 'var(--font-cormorant)', fontWeight: 300, fontSize: 'clamp(52px, 7vw, 88px)', color: '#F2EDE4', lineHeight: 0.9, marginBottom: 0 }}>
+          Jadilah bagian
+        </div>
+        <div style={{ fontFamily: 'var(--font-cormorant)', fontWeight: 300, fontSize: 'clamp(52px, 7vw, 88px)', color: 'rgba(242,237,228,0.4)', lineHeight: 0.9, fontStyle: 'italic', marginBottom: 0 }}>
+          dari perubahan ini.
+        </div>
+
+        {/* SUBTEXT */}
+        <div style={{ marginTop: '28px', marginBottom: '48px', fontFamily: 'var(--font-syne)', fontSize: '14px', color: 'rgba(242,237,228,0.25)', lineHeight: 1.8, maxWidth: '420px', textAlign: 'center' }}>
+          Beli $SALAK token sekarang &mdash; setiap token adalah 1 kg salak nyata di gudang terverifikasi.
+        </div>
+
+        {/* TOMBOL */}
+        <div style={{ display: 'flex', gap: '16px', justifyContent: 'center', flexWrap: 'wrap' }}>
+          <button 
+            onClick={() => window.location.href = '/buy'}
+            style={{
+              background: 'rgba(184,115,51,0.9)', color: '#080806', fontFamily: 'var(--font-jetbrains)', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.2em',
+              padding: '14px 32px', borderRadius: '2px', border: 'none', cursor: 'pointer'
+            }}
+          >
+            BELI $SALAK &rarr;
+          </button>
+          <button 
+            onClick={() => window.location.href = '/petani'}
+            style={{
+              background: 'transparent', color: 'rgba(242,237,228,0.4)', fontFamily: 'var(--font-jetbrains)', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.2em',
+              padding: '14px 32px', borderRadius: '2px', border: '0.5px solid rgba(242,237,228,0.12)', cursor: 'pointer'
+            }}
+          >
+            DAFTAR SEBAGAI PETANI
+          </button>
+        </div>
+
+        {/* DIVIDER */}
+        <div style={{ marginTop: '80px', marginBottom: '32px', width: '100%', height: '0.5px', background: 'rgba(255,255,255,0.04)' }} />
+
+        {/* FOOTER BOTTOM */}
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', flexWrap: 'wrap', gap: '16px' }}>
+          {/* Kiri */}
+          <div style={{ fontFamily: 'var(--font-jetbrains)', fontSize: '8px', opacity: 0.12, letterSpacing: '0.1em' }}>
+            &copy; 2026 Daulat Salak &middot; $PetaniRakyat-DS3
+          </div>
+
+          {/* Tengah */}
+          <div style={{ display: 'flex', gap: '32px', flexWrap: 'wrap', justifyContent: 'center' }}>
+            {[
+              { n: 'EKOSISTEM', h: '#' },
+              { n: 'TOKEN', h: '/token' },
+              { n: 'MARKETPLACE', h: '/marketplace' },
+              { n: 'PETANI', h: '/petani' }
+            ].map(l => (
+              <div 
+                key={l.n} 
+                onClick={() => { if(l.h !== '#') window.location.href = l.h }}
+                style={{ fontFamily: 'var(--font-jetbrains)', fontSize: '8px', opacity: 0.15, letterSpacing: '0.15em', cursor: 'pointer', textTransform: 'uppercase' }}
+              >
+                {l.n}
+              </div>
+            ))}
+          </div>
+
+          {/* Kanan */}
+          <div style={{ fontFamily: 'var(--font-jetbrains)', fontSize: '8px', opacity: 0.1, letterSpacing: '0.12em', textAlign: 'right' }}>
+            POLYGON NETWORK &middot; ERC-20
           </div>
         </div>
       </section>
