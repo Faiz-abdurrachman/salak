@@ -2,8 +2,19 @@
 import React from 'react'
 import Image from 'next/image'
 import clusterBg from '../../background/layer-3-cluster.jpg'
+import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts'
 
 export default function HubPage() {
+  const priceData = [
+    { date: '1 Mar', salak: 3200, ekspor: 42000, token: 14200 },
+    { date: '5 Mar', salak: 3100, ekspor: 43500, token: 14800 },
+    { date: '10 Mar', salak: 3400, ekspor: 44000, token: 15200 },
+    { date: '15 Mar', salak: 3000, ekspor: 41000, token: 13900 },
+    { date: '20 Mar', salak: 3600, ekspor: 45000, token: 15800 },
+    { date: '25 Mar', salak: 3200, ekspor: 44500, token: 15400 },
+    { date: '1 Apr', salak: 3500, ekspor: 45000, token: 15000 },
+  ]
+
   return (
     <main style={{
       background: '#080806',
@@ -300,6 +311,119 @@ export default function HubPage() {
           </div>
           <div style={{ fontFamily: 'var(--font-jetbrains)', fontSize: '9px', opacity: 0.12, textAlign: 'right' }}>
             Data diperbarui setiap 6 jam via oracle on-chain
+          </div>
+        </div>
+      </section>
+
+      {/* 5. SECTION 3: HARGA & MARKET */}
+      <section style={{
+        background: '#080806',
+        padding: '96px 60px',
+        borderTop: '0.5px solid rgba(255,255,255,0.04)'
+      }}>
+        {/* HEADER */}
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '56px', flexWrap: 'wrap', gap: '32px' }}>
+          {/* Kiri */}
+          <div>
+            <div style={{ fontFamily: 'var(--font-jetbrains)', fontSize: '8px', letterSpacing: '0.2em', opacity: 0.2, marginBottom: '16px', textTransform: 'uppercase' }}>
+              SECTION 03 &middot; HARGA & MARKET
+            </div>
+            <div style={{ fontFamily: 'var(--font-cormorant)', fontWeight: 300, fontSize: 'clamp(48px, 5vw, 72px)', color: '#F2EDE4', lineHeight: 0.9 }}>
+              Harga real-time,
+            </div>
+            <div style={{ fontFamily: 'var(--font-cormorant)', fontWeight: 300, fontSize: 'clamp(48px, 5vw, 72px)', color: 'rgba(242,237,228,0.4)', lineHeight: 0.9, fontStyle: 'italic' }}>
+              tanpa manipulasi.
+            </div>
+          </div>
+          
+          {/* Kanan */}
+          <div style={{ display: 'flex', gap: '24px', flexWrap: 'wrap' }}>
+            {[
+              { label: 'HARGA PETANI', val: 'Rp 3.500/kg', color: '#F2EDE4' },
+              { label: 'HARGA EKSPOR', val: 'Rp 45.000/kg', color: '#D4956A' },
+              { label: 'HARGA TOKEN', val: 'Rp 15.000', color: '#F2EDE4' }
+            ].map(p => (
+              <div key={p.label} style={{ border: '0.5px solid rgba(255,255,255,0.06)', padding: '12px 20px', borderRadius: '2px' }}>
+                <div style={{ fontFamily: 'var(--font-jetbrains)', fontSize: '7px', opacity: 0.2, letterSpacing: '0.15em', marginBottom: '6px' }}>
+                  {p.label}
+                </div>
+                <div style={{ fontFamily: 'var(--font-jetbrains)', fontSize: '13px', color: p.color }}>
+                  {p.val}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* LEGEND */}
+        <div style={{ display: 'flex', gap: '24px', marginBottom: '24px', flexWrap: 'wrap' }}>
+          {[
+            { dot: '#2d7a5f', lab: 'Harga Petani (Rp/kg)' },
+            { dot: '#D4956A', lab: 'Harga Ekspor (Rp/kg)' },
+            { dot: 'rgba(242,237,228,0.4)', lab: 'Harga Token $SALAK' }
+          ].map(lg => (
+            <div key={lg.lab} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <div style={{ width: '4px', height: '4px', borderRadius: '50%', background: lg.dot }} />
+              <div style={{ fontFamily: 'var(--font-jetbrains)', fontSize: '8px', opacity: 0.4 }}>
+                {lg.lab}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* CHART */}
+        <div style={{ width: '100%', height: '280px' }}>
+          <ResponsiveContainer width="100%" height={280}>
+            <AreaChart data={priceData} margin={{ top: 10, right: 0, left: 0, bottom: 0 }}>
+              <defs>
+                <linearGradient id="gradSalak" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="#2d7a5f" stopOpacity={0.15} />
+                  <stop offset="95%" stopColor="#2d7a5f" stopOpacity={0} />
+                </linearGradient>
+                <linearGradient id="gradEkspor" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="#D4956A" stopOpacity={0.15} />
+                  <stop offset="95%" stopColor="#D4956A" stopOpacity={0} />
+                </linearGradient>
+                <linearGradient id="gradToken" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="#F2EDE4" stopOpacity={0.08} />
+                  <stop offset="95%" stopColor="#F2EDE4" stopOpacity={0} />
+                </linearGradient>
+              </defs>
+              <XAxis 
+                dataKey="date" 
+                tick={{ fontFamily: 'var(--font-jetbrains)', fontSize: 9, fill: 'rgba(242,237,228,0.2)', letterSpacing: 1 }}
+                axisLine={false} 
+                tickLine={false} 
+              />
+              <YAxis hide={true} />
+              <Tooltip 
+                contentStyle={{ background: '#0d0d0b', border: '0.5px solid rgba(255,255,255,0.08)', borderRadius: '2px', fontFamily: 'var(--font-jetbrains)', fontSize: '10px' }}
+                labelStyle={{ color: 'rgba(242,237,228,0.4)' }}
+                itemStyle={{ color: '#F2EDE4' }}
+              />
+              <Area type="monotone" dataKey="salak" stroke="#2d7a5f" strokeWidth={1.5} fill="url(#gradSalak)" />
+              <Area type="monotone" dataKey="ekspor" stroke="#D4956A" strokeWidth={1.5} fill="url(#gradEkspor)" />
+              <Area type="monotone" dataKey="token" stroke="rgba(242,237,228,0.3)" strokeWidth={1} fill="url(#gradToken)" />
+            </AreaChart>
+          </ResponsiveContainer>
+        </div>
+
+        {/* CATATAN BAWAH CHART */}
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '20px', flexWrap: 'wrap', gap: '16px' }}>
+          <div style={{ fontFamily: 'var(--font-jetbrains)', fontSize: '8px', opacity: 0.15 }}>
+            Data bersumber dari transaksi aktual platform & oracle on-chain &middot; Diperbarui setiap 5 menit
+          </div>
+          <div style={{ display: 'flex', gap: '4px' }}>
+            {['1D', '1W', '1M', 'ALL'].map(tm => (
+              <div key={tm} style={{ 
+                fontFamily: 'var(--font-jetbrains)', fontSize: '9px', padding: '4px 10px',
+                color: tm === '1M' ? '#D4956A' : '#F2EDE4',
+                opacity: tm === '1M' ? 1 : 0.2,
+                cursor: 'pointer'
+              }}>
+                {tm}
+              </div>
+            ))}
           </div>
         </div>
       </section>
