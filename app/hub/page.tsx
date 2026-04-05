@@ -6,13 +6,22 @@ import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'rec
 
 export default function HubPage() {
   const priceData = [
-    { date: '1 Mar', salak: 3200, ekspor: 42000, token: 14200 },
-    { date: '5 Mar', salak: 3100, ekspor: 43500, token: 14800 },
-    { date: '10 Mar', salak: 3400, ekspor: 44000, token: 15200 },
-    { date: '15 Mar', salak: 3000, ekspor: 41000, token: 13900 },
-    { date: '20 Mar', salak: 3600, ekspor: 45000, token: 15800 },
-    { date: '25 Mar', salak: 3200, ekspor: 44500, token: 15400 },
-    { date: '1 Apr', salak: 3500, ekspor: 45000, token: 15000 },
+    { date: '1 Mar', petani: 100, ekspor: 100, token: 100 },
+    { date: '5 Mar', petani: 97, ekspor: 103, token: 104 },
+    { date: '10 Mar', petani: 106, ekspor: 104, token: 107 },
+    { date: '15 Mar', petani: 94, ekspor: 97, token: 98 },
+    { date: '20 Mar', petani: 113, ekspor: 107, token: 111 },
+    { date: '25 Mar', petani: 100, ekspor: 105, token: 108 },
+    { date: '1 Apr', petani: 109, ekspor: 107, token: 106 },
+  ]
+
+  const transactions = [
+    { type: 'MINT', desc: 'Petani Sleman — 500 kg salak masuk gudang', amount: '+500 $SALAK', time: '2 menit lalu', hash: '0x7f3a...9b2c', positive: true },
+    { type: 'EKSPOR', desc: 'Pengiriman ke Singapura — Changi Cold Storage', amount: '2.000 kg', time: '15 menit lalu', hash: '0x4e1d...3a7f', positive: true },
+    { type: 'REDEEM', desc: 'Pembeli Jakarta — tukar token ke fisik salak', amount: '-150 $SALAK', time: '32 menit lalu', hash: '0x9c2b...1e4d', positive: false },
+    { type: 'MINT', desc: 'Koperasi Magelang — 1.200 kg batch harvest', amount: '+1.200 $SALAK', time: '1 jam lalu', hash: '0x2a8f...7c1b', positive: true },
+    { type: 'TRANSFER', desc: 'Wallet importir Malaysia — pembelian wholesale', amount: '800 $SALAK', time: '1 jam lalu', hash: '0x6d4e...2f9a', positive: true },
+    { type: 'EKSPOR', desc: 'Pengiriman ke Hongkong — batch mingguan', amount: '5.000 kg', time: '3 jam lalu', hash: '0x1b7c...4e3d', positive: true },
   ]
 
   return (
@@ -318,8 +327,9 @@ export default function HubPage() {
       {/* 5. SECTION 3: HARGA & MARKET */}
       <section style={{
         background: '#080806',
-        padding: '96px 60px',
-        borderTop: '0.5px solid rgba(255,255,255,0.04)'
+        padding: '0 60px 96px',
+        borderTop: 'none',
+        marginTop: 0
       }}>
         {/* HEADER */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '56px', flexWrap: 'wrap', gap: '32px' }}>
@@ -372,20 +382,20 @@ export default function HubPage() {
         </div>
 
         {/* CHART */}
-        <div style={{ width: '100%', height: '280px' }}>
-          <ResponsiveContainer width="100%" height={280}>
+        <div style={{ width: '100%', height: '200px' }}>
+          <ResponsiveContainer width="100%" height={200}>
             <AreaChart data={priceData} margin={{ top: 10, right: 0, left: 0, bottom: 0 }}>
               <defs>
                 <linearGradient id="gradSalak" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#2d7a5f" stopOpacity={0.15} />
+                  <stop offset="5%" stopColor="#2d7a5f" stopOpacity={0.08} />
                   <stop offset="95%" stopColor="#2d7a5f" stopOpacity={0} />
                 </linearGradient>
                 <linearGradient id="gradEkspor" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#D4956A" stopOpacity={0.15} />
+                  <stop offset="5%" stopColor="#D4956A" stopOpacity={0.06} />
                   <stop offset="95%" stopColor="#D4956A" stopOpacity={0} />
                 </linearGradient>
                 <linearGradient id="gradToken" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#F2EDE4" stopOpacity={0.08} />
+                  <stop offset="5%" stopColor="#F2EDE4" stopOpacity={0.04} />
                   <stop offset="95%" stopColor="#F2EDE4" stopOpacity={0} />
                 </linearGradient>
               </defs>
@@ -401,17 +411,22 @@ export default function HubPage() {
                 labelStyle={{ color: 'rgba(242,237,228,0.4)' }}
                 itemStyle={{ color: '#F2EDE4' }}
               />
-              <Area type="monotone" dataKey="salak" stroke="#2d7a5f" strokeWidth={1.5} fill="url(#gradSalak)" />
+              <Area type="monotone" dataKey="petani" stroke="#2d7a5f" strokeWidth={1.5} fill="url(#gradSalak)" />
               <Area type="monotone" dataKey="ekspor" stroke="#D4956A" strokeWidth={1.5} fill="url(#gradEkspor)" />
-              <Area type="monotone" dataKey="token" stroke="rgba(242,237,228,0.3)" strokeWidth={1} fill="url(#gradToken)" />
+              <Area type="monotone" dataKey="token" stroke="rgba(242,237,228,0.3)" strokeWidth={1.5} fill="url(#gradToken)" />
             </AreaChart>
           </ResponsiveContainer>
         </div>
 
         {/* CATATAN BAWAH CHART */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '20px', flexWrap: 'wrap', gap: '16px' }}>
-          <div style={{ fontFamily: 'var(--font-jetbrains)', fontSize: '8px', opacity: 0.15 }}>
-            Data bersumber dari transaksi aktual platform & oracle on-chain &middot; Diperbarui setiap 5 menit
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+            <div style={{ fontFamily: 'var(--font-jetbrains)', fontSize: '8px', opacity: 0.15 }}>
+              Data bersumber dari transaksi aktual platform & oracle on-chain &middot; Diperbarui setiap 5 menit
+            </div>
+            <div style={{ fontFamily: 'var(--font-jetbrains)', fontSize: '8px', opacity: 0.1 }}>
+              * Indeks harga dinormalisasi, base = 100 per 1 Mar 2026
+            </div>
           </div>
           <div style={{ display: 'flex', gap: '4px' }}>
             {['1D', '1W', '1M', 'ALL'].map(tm => (
@@ -424,6 +439,79 @@ export default function HubPage() {
                 {tm}
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 6. SECTION 4: AKTIVITAS TRANSAKSI */}
+      <section style={{ background: '#080806', padding: '96px 60px', borderTop: '0.5px solid rgba(255,255,255,0.04)' }}>
+        {/* HEADER */}
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '48px', flexWrap: 'wrap', gap: '32px' }}>
+          {/* Kiri */}
+          <div>
+            <div style={{ fontFamily: 'var(--font-jetbrains)', fontSize: '8px', letterSpacing: '0.2em', opacity: 0.2, marginBottom: '16px', textTransform: 'uppercase' }}>
+              SECTION 04 &middot; AKTIVITAS ON-CHAIN
+            </div>
+            <div style={{ fontFamily: 'var(--font-cormorant)', fontWeight: 300, fontSize: 'clamp(48px, 5vw, 72px)', color: '#F2EDE4', lineHeight: 0.9 }}>
+              Setiap transaksi,
+            </div>
+            <div style={{ fontFamily: 'var(--font-cormorant)', fontWeight: 300, fontSize: 'clamp(48px, 5vw, 72px)', color: 'rgba(242,237,228,0.4)', lineHeight: 0.9, fontStyle: 'italic' }}>
+              tercatat permanen.
+            </div>
+          </div>
+          
+          {/* Kanan */}
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
+            <div style={{ fontFamily: 'var(--font-jetbrains)', fontSize: '7px', color: 'rgba(242,237,228,0.15)', letterSpacing: '0.15em', marginBottom: '8px', textAlign: 'right' }}>
+              TOTAL TRANSAKSI HARI INI
+            </div>
+            <div style={{ fontFamily: 'var(--font-cormorant)', fontWeight: 300, fontSize: '40px', color: '#D4956A', lineHeight: 1 }}>
+              1.847
+            </div>
+            <div style={{ fontFamily: 'var(--font-jetbrains)', fontSize: '8px', color: 'rgba(242,237,228,0.15)', textAlign: 'right' }}>
+              transaksi on-chain
+            </div>
+          </div>
+        </div>
+
+        {/* FEED TRANSAKSI */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
+          {transactions.map((tx, i) => {
+            let typeColor = '#fff';
+            if (tx.type === 'MINT') typeColor = '#2d7a5f';
+            else if (tx.type === 'EKSPOR') typeColor = '#D4956A';
+            else if (tx.type === 'REDEEM') typeColor = 'rgba(242,237,228,0.3)';
+            else if (tx.type === 'TRANSFER') typeColor = 'rgba(184,115,51,0.5)';
+
+            return (
+              <div key={i} style={{ borderBottom: '0.5px solid rgba(255,255,255,0.04)', padding: '20px 0', display: 'flex', alignItems: 'center', gap: '24px', flexWrap: 'wrap' }}>
+                <div style={{ width: '72px', flexShrink: 0, padding: '4px 0', fontFamily: 'var(--font-jetbrains)', fontSize: '9px', letterSpacing: '0.15em', color: typeColor }}>
+                  {tx.type}
+                </div>
+                <div style={{ flex: 1, fontFamily: 'var(--font-syne)', fontSize: '13px', color: 'rgba(242,237,228,0.6)', minWidth: '200px' }}>
+                  {tx.desc}
+                </div>
+                <div style={{ width: '140px', flexShrink: 0, textAlign: 'right', fontFamily: 'var(--font-jetbrains)', fontSize: '11px', color: tx.positive ? '#D4956A' : 'rgba(242,237,228,0.3)' }}>
+                  {tx.amount}
+                </div>
+                <div style={{ width: '100px', flexShrink: 0, textAlign: 'right', fontFamily: 'var(--font-jetbrains)', fontSize: '9px', color: 'rgba(242,237,228,0.2)' }}>
+                  {tx.time}
+                </div>
+                <div style={{ width: '100px', flexShrink: 0, textAlign: 'right', fontFamily: 'var(--font-jetbrains)', fontSize: '9px', color: 'rgba(184,115,51,0.2)' }}>
+                  {tx.hash}
+                </div>
+              </div>
+            )
+          })}
+        </div>
+
+        {/* FOOTER */}
+        <div style={{ marginTop: '32px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '16px' }}>
+          <div style={{ fontFamily: 'var(--font-jetbrains)', fontSize: '8px', color: 'rgba(242,237,228,0.15)' }}>
+            Menampilkan 6 dari 1.847 transaksi hari ini
+          </div>
+          <div style={{ fontFamily: 'var(--font-jetbrains)', fontSize: '9px', color: 'rgba(184,115,51,0.4)', cursor: 'pointer' }}>
+            Lihat semua di blockchain explorer &rarr;
           </div>
         </div>
       </section>
