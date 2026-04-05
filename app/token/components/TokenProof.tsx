@@ -5,7 +5,7 @@ import Image from "next/image";
 
 export default function TokenProof() {
   return (
-    <section style={{
+    <section id="proof-section" style={{
       background: '#080806',
       padding: '120px 40px'
     }}>

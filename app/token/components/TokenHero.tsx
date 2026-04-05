@@ -96,7 +96,11 @@ export default function TokenHero() {
           }}>
             Beli $SALAK
           </button>
-          <button style={{
+          <button 
+            onClick={() => {
+              document.getElementById('proof-section')?.scrollIntoView({ behavior: 'smooth' })
+            }}
+            style={{
             background: 'transparent',
             color: 'rgba(242,237,228,0.65)',
             fontFamily: 'var(--font-jetbrains)',

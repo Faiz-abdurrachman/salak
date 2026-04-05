@@ -1,134 +1,309 @@
-import Link from "next/link";
+"use client"
+import React from 'react'
+import Image from 'next/image'
+import clusterBg from '../../background/layer-3-cluster.jpg'
 
-function ArrowUpRightIcon({ className = "" }: { className?: string }) {
+export default function HubPage() {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
-      <path d="M7 17L17 7"/>
-      <path d="M7 7h10v10"/>
-    </svg>
-  );
-}
-
-export default function ProtocolHub() {
-  return (
-    <div className="min-h-screen bg-[#080806] text-[#F2EDE4] p-4 md:p-8 lg:p-12 selection:bg-[#B87333]/30 uppercase">
-      <header className="flex justify-between items-center mb-16 max-w-7xl mx-auto">
-        <Link href="/" className="flex items-center gap-2 group">
-          <div className="w-8 h-8 rounded-full border border-[#B87333]/30 flex items-center justify-center group-hover:border-[#B87333] transition-colors">
-            <span className="w-2 h-2 bg-[#B87333] rounded-full"></span>
-          </div>
-          <span style={{ fontFamily: "var(--font-syne)" }} className="font-bold tracking-widest text-sm normal-case">Daulat Salak</span>
-        </Link>
-        <div style={{ fontFamily: "var(--font-jetbrains)" }} className="text-xs text-[#F2EDE4]/50">
-          /// PROTOCOL HUB
+    <main style={{
+      background: '#080806',
+      minHeight: '100vh',
+      color: '#F2EDE4'
+    }}>
+      <style>{`
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        @keyframes pulseDot {
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0.4; }
+        }
+      `}</style>
+      
+      {/* 1. NAVBAR - PERTAHANKAN PERSIS */}
+      <div style={{
+        position: 'fixed',
+        top: 0,
+        width: '100%',
+        zIndex: 100,
+        height: '56px',
+        padding: '0 60px',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        background: 'rgba(8,8,6,0.9)',
+        backdropFilter: 'blur(20px)',
+        borderBottom: '0.5px solid rgba(255,255,255,0.04)'
+      }}>
+        {/* Kiri */}
+        <div style={{ fontFamily: 'var(--font-jetbrains)', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.2em', color: 'rgba(242,237,228,0.6)' }}>
+          DAULAT SALAK
         </div>
-      </header>
+        
+        {/* Tengah */}
+        <div style={{ display: 'flex', gap: '40px' }}>
+          {[
+            { n: 'EKOSISTEM', act: true, href: '#' },
+            { n: 'MARKETPLACE', act: false, href: '/marketplace' },
+            { n: 'PETANI', act: false, href: '/petani' },
+            { n: 'TOKEN', act: false, href: '/token' }
+          ].map(link => (
+            <div 
+              key={link.n}
+              onClick={() => { if(link.href !== '#') window.location.href = link.href }}
+              style={{
+                fontFamily: 'var(--font-jetbrains)', fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.15em', cursor: 'pointer',
+                color: link.act ? '#D4956A' : 'rgba(242,237,228,0.25)'
+              }}
+            >
+              {link.n}
+            </div>
+          ))}
+        </div>
 
-      <main className="max-w-7xl mx-auto">
-        <h1 style={{ fontFamily: "var(--font-cormorant)" }} className="text-5xl md:text-7xl mb-4 leading-tight normal-case">
-          The <span className="text-[#B87333] italic">Ecosystem</span>
-        </h1>
-        <p style={{ fontFamily: "var(--font-syne)" }} className="text-[#F2EDE4]/70 max-w-2xl mb-12 text-sm md:text-base leading-relaxed normal-case">
-          Welcome to the Daulat Salak Protocol Hub. Discover the world's first RWA ecosystem entirely backed by premium export-grade Salak. Navigate our tokenomics, verify warehouse reserves, and dive into the lore of the volcanic soil.
-        </p>
+        {/* Kanan */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <div style={{ width: '5px', height: '5px', borderRadius: '50%', background: '#22c55e', animation: 'pulseDot 2s infinite' }} />
+            <div style={{ fontFamily: 'var(--font-jetbrains)', fontSize: '9px', textTransform: 'uppercase', letterSpacing: '0.15em', color: 'rgba(34,197,94,0.6)' }}>
+              LIVE
+            </div>
+          </div>
+          <button 
+            onClick={() => window.location.href = '/buy'}
+            style={{
+              background: 'rgba(184,115,51,0.85)', color: '#080806', fontFamily: 'var(--font-jetbrains)', fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.15em',
+              padding: '8px 18px', borderRadius: '2px', border: 'none', cursor: 'pointer'
+            }}
+          >
+            Beli $SALAK
+          </button>
+        </div>
+      </div>
 
-        {/* Bento Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 auto-rows-[250px]">
+      {/* 2. HERO SECTION */}
+      <section style={{
+        position: 'relative',
+        minHeight: '100vh',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'flex-end',
+        overflow: 'hidden',
+        padding: '0 60px 0'
+      }}>
+        {/* FOTO BACKGROUND */}
+        <div style={{ zIndex: 0 }}>
+          <Image 
+            src={clusterBg}
+            alt="Daulat Salak Cluster"
+            style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center' }}
+            placeholder="blur"
+          />
+        </div>
+
+        {/* OVERLAY 1 — gelap keseluruhan */}
+        <div style={{
+          position: 'absolute',
+          inset: 0,
+          zIndex: 1,
+          background: 'rgba(8,8,6,0.55)'
+        }} />
+
+        {/* OVERLAY 2 — gradient bawah */}
+        <div style={{
+          position: 'absolute',
+          inset: 0,
+          zIndex: 2,
+          background: 'linear-gradient(to top, rgba(8,8,6,1) 0%, transparent 65%)'
+        }} />
+
+        {/* KONTEN */}
+        <div style={{ position: 'relative', zIndex: 3, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
           
-          {/* Main Card: Token Dashboard */}
-          <Link 
-            href="/token" 
-            className="group relative md:col-span-2 lg:col-span-2 row-span-2 rounded-2xl border border-[#B87333]/20 bg-gradient-to-b from-[#B87333]/5 to-transparent p-8 overflow-hidden hover:border-[#B87333]/50 transition-all duration-500"
-          >
-            <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#B87333]/10 to-transparent pointer-events-none"></div>
-            <div className="relative z-10 h-full flex flex-col justify-between">
-              <div>
-                <div style={{ fontFamily: "var(--font-jetbrains)" }} className="text-xs text-[#B87333] tracking-widest uppercase mb-2 flex items-center justify-between">
-                  <span>Dashboard</span>
-                  <ArrowUpRightIcon className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
-                </div>
-                <h2 style={{ fontFamily: "var(--font-cormorant)" }} className="text-4xl text-[#F2EDE4] mb-2 normal-case">$SALAK Token</h2>
-                <p style={{ fontFamily: "var(--font-syne)" }} className="text-sm text-[#F2EDE4]/60 max-w-sm normal-case">
-                  View real-time price charts, tokenomics, and buy $SALAK directly from the decentralized exchange.
-                </p>
-              </div>
-              
-              <div className="flex items-end justify-between">
-                <div>
-                  <div style={{ fontFamily: "var(--font-jetbrains)" }} className="text-[10px] text-[#F2EDE4]/40 uppercase mb-1">Live Peg Price</div>
-                  <div style={{ fontFamily: "var(--font-syne)" }} className="text-3xl font-bold text-[#D4956A] normal-case">$3.00 <span className="text-base text-[#F2EDE4]/40 font-normal">/ kg</span></div>
-                </div>
-                <div style={{ fontFamily: "var(--font-jetbrains)" }} className="text-xs text-[#B87333] bg-[#B87333]/10 px-3 py-1 rounded-full border border-[#B87333]/20">
-                  Vol: $1.2M 
-                </div>
-              </div>
+          {/* KIRI BAWAH */}
+          <div>
+            {/* Eyebrow */}
+            <div style={{ fontFamily: 'var(--font-jetbrains)', fontSize: '9px', textTransform: 'uppercase', letterSpacing: '0.2em', color: 'rgba(184,115,51,0.5)', marginBottom: '14px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <div style={{ width: '4px', height: '4px', borderRadius: '50%', background: '#22c55e', animation: 'pulseDot 2s infinite' }} />
+              <span>EKOSISTEM &middot; REAL-TIME DATA</span>
             </div>
-          </Link>
+            
+            {/* H1 */}
+            <h1 style={{ fontFamily: 'var(--font-cormorant)', fontWeight: 300, fontSize: 'clamp(56px, 8vw, 96px)', color: '#F2EDE4', lineHeight: 0.9, letterSpacing: '-0.01em', margin: 0 }}>
+              <div>Transparansi</div>
+              <div style={{ fontStyle: 'italic', color: 'rgba(242,237,228,0.6)' }}>Penuh.</div>
+            </h1>
 
-          {/* Card: Marketplace / Redeem */}
-          <Link 
-            href="/marketplace" 
-            className="group relative md:col-span-1 lg:col-span-2 rounded-2xl border border-[#F2EDE4]/10 bg-[#F2EDE4]/5 p-6 hover:bg-[#F2EDE4]/10 transition-colors"
-          >
-            <div className="h-full flex flex-col justify-between">
-              <div>
-                <div style={{ fontFamily: "var(--font-jetbrains)" }} className="flex justify-between items-center mb-2">
-                  <span className="text-xs text-[#F2EDE4]/50 uppercase tracking-widest">Marketplace</span>
-                  <ArrowUpRightIcon className="w-4 h-4 text-[#F2EDE4]/50 group-hover:text-[#B87333]" />
-                </div>
-                <h3 style={{ fontFamily: "var(--font-syne)" }} className="text-2xl font-bold mb-2 normal-case text-[#D4956A]">Redeem Physical Salak</h3>
-                <p style={{ fontFamily: "var(--font-syne)" }} className="text-sm text-[#F2EDE4]/60 normal-case">Burn your $SALAK tokens to redeem physical exports directly from our partner warehouses.</p>
-              </div>
-            </div>
-          </Link>
-
-          {/* Card: Proof of Reserve */}
-          <div className="group relative md:col-span-1 lg:col-span-2 rounded-2xl border border-[#F2EDE4]/10 bg-[#F2EDE4]/5 p-6 hover:bg-[#F2EDE4]/10 transition-colors overflow-hidden cursor-not-allowed">
-             <div className="h-full flex flex-col justify-between relative z-10">
-              <div>
-                <div style={{ fontFamily: "var(--font-jetbrains)" }} className="flex justify-between items-center mb-2">
-                  <span className="text-xs text-[#F2EDE4]/50 uppercase tracking-widest">Audits</span>
-                  <span className="text-[10px] text-[#B87333] border border-[#B87333]/30 rounded-full px-2 py-0.5 bg-[#B87333]/10">SOON</span>
-                </div>
-                <h3 style={{ fontFamily: "var(--font-syne)" }} className="text-xl font-bold mb-2 normal-case">Proof of Reserve</h3>
-                <p style={{ fontFamily: "var(--font-syne)" }} className="text-sm text-[#F2EDE4]/60 normal-case">Verify real-time physical reserves mapped securely to the blockchain via Chainlink Oracles.</p>
-              </div>
+            {/* Subtext */}
+            <div style={{ marginTop: '20px', maxWidth: '360px', fontFamily: 'var(--font-syne)', fontSize: '13px', color: 'rgba(242,237,228,0.3)', lineHeight: 1.8 }}>
+              Semua data ekosistem $SALAK terbuka untuk publik &mdash; stok gudang, ekspor aktif, aktivitas on-chain.
             </div>
           </div>
 
-          {/* Card: Lore */}
-          <Link 
-            href="/product" 
-            className="group relative rounded-2xl border border-[#F2EDE4]/10 bg-[url('/bg-texture-hint.png')] bg-cover bg-center p-6 hover:border-[#B87333]/40 transition-colors flex flex-col justify-between"
-            style={{ backgroundColor: 'rgba(242, 237, 228, 0.03)' }}
-          >
-             <div>
-                <div style={{ fontFamily: "var(--font-jetbrains)" }} className="flex justify-between items-center mb-2">
-                  <span className="text-xs text-[#F2EDE4]/50 uppercase tracking-widest">Lore</span>
-                  <ArrowUpRightIcon className="w-4 h-4 text-[#F2EDE4]/50 group-hover:text-[#B87333]" />
-                </div>
-                <h3 style={{ fontFamily: "var(--font-cormorant)" }} className="text-3xl italic font-bold mb-2 normal-case text-[#F2EDE4]">Tanah Vulkanik</h3>
-                <p style={{ fontFamily: "var(--font-syne)" }} className="text-xs text-[#F2EDE4]/60 normal-case">The story of the soil, the farmers, and the sweet harvest.</p>
-             </div>
-          </Link>
-
-           {/* Card: Community */}
-           <div className="relative rounded-2xl border border-[#F2EDE4]/10 bg-transparent flex flex-col justify-center items-center">
-              <a href="https://discord.com" target="_blank" rel="noopener noreferrer" className="w-full h-1/2 border-b border-[#F2EDE4]/10 flex justify-center items-center hover:bg-[#F2EDE4]/5 transition-colors text-[#F2EDE4]/70 hover:text-white uppercase">
-                 <span style={{ fontFamily: "var(--font-jetbrains)" }} className="text-xs tracking-widest flex items-center gap-2">Discord <ArrowUpRightIcon className="w-3 h-3"/></span>
-              </a>
-              <a href="https://x.com" target="_blank" rel="noopener noreferrer" className="w-full h-1/2 flex justify-center items-center hover:bg-[#F2EDE4]/5 transition-colors text-[#F2EDE4]/70 hover:text-white uppercase">
-                 <span style={{ fontFamily: "var(--font-jetbrains)" }} className="text-xs tracking-widest flex items-center gap-2">Twitter <ArrowUpRightIcon className="w-3 h-3"/></span>
-              </a>
+          {/* KANAN BAWAH */}
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '6px' }}>
+            <div style={{ fontFamily: 'var(--font-jetbrains)', fontSize: '8px', textTransform: 'uppercase', letterSpacing: '0.15em', color: 'rgba(242,237,228,0.12)' }}>
+              LAST UPDATED &middot; JUST NOW
+            </div>
+            <div style={{ fontFamily: 'var(--font-jetbrains)', fontSize: '8px', letterSpacing: '0.1em', color: 'rgba(184,115,51,0.2)' }}>
+              POLYGON NETWORK &middot; BLOCK #19,847,203
+            </div>
           </div>
 
         </div>
+      </section>
 
-        {/* Footer info */}
-        <footer style={{ fontFamily: "var(--font-jetbrains)" }} className="mt-16 text-center text-[10px] text-[#F2EDE4]/30 uppercase tracking-widest">
-            © 2026 DAULAT SALAK PROTOCOL. ALL RIGHTS RESERVED.
-        </footer>
-      </main>
-    </div>
-  );
+      {/* 3. STAT CARDS */}
+      <div style={{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(4, 1fr)',
+        gap: 0,
+        background: '#080806',
+        borderTop: '0.5px solid rgba(255,255,255,0.06)'
+      }}>
+        {[
+          { label: 'STOK GUDANG', val: '247', unit: 'ton salak', trend: '▲ +12 ton minggu ini', trColor: 'rgba(34,197,94,0.5)' },
+          { label: 'TOKEN BEREDAR', val: '247.000', unit: '$SALAK on-chain', trend: '▲ backing 1:1 verified', trColor: 'rgba(34,197,94,0.5)' },
+          { label: 'EKSPOR AKTIF', val: '15', unit: 'ton / minggu', trend: '→ 3 destinasi aktif', trColor: 'rgba(184,115,51,0.5)' },
+          { label: 'PETANI AKTIF', val: '1.240', unit: 'petani terdaftar', trend: '▲ +18% bulan ini', trColor: 'rgba(34,197,94,0.5)' }
+        ].map((card, i) => (
+          <div key={card.label} style={{
+            padding: '32px 40px',
+            borderRight: i !== 3 ? '0.5px solid rgba(255,255,255,0.04)' : 'none'
+          }}>
+            <div style={{ fontFamily: 'var(--font-jetbrains)', fontSize: '8px', textTransform: 'uppercase', letterSpacing: '0.18em', color: 'rgba(242,237,228,0.18)', marginBottom: '12px' }}>
+              {card.label}
+            </div>
+            <div style={{ fontFamily: 'var(--font-cormorant)', fontWeight: 300, fontSize: 'clamp(40px, 4vw, 56px)', color: '#D4956A', lineHeight: 1 }}>
+              {card.val}
+            </div>
+            <div style={{ fontFamily: 'var(--font-jetbrains)', fontSize: '10px', color: 'rgba(242,237,228,0.2)', marginTop: '4px' }}>
+              {card.unit}
+            </div>
+            <div style={{ fontFamily: 'var(--font-jetbrains)', fontSize: '9px', marginTop: '10px', color: card.trColor }}>
+              {card.trend}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* 4. SECTION 2: STOK GUDANG */}
+      <section style={{
+        background: '#080806',
+        padding: '0 60px 96px',
+        borderTop: 'none',
+        marginTop: 0
+      }}>
+        {/* HEADER SECTION */}
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '56px', flexWrap: 'wrap', gap: '32px' }}>
+          {/* Kiri */}
+          <div>
+            <div style={{ fontFamily: 'var(--font-jetbrains)', fontSize: '8px', letterSpacing: '0.2em', opacity: 0.2, marginBottom: '16px', textTransform: 'uppercase' }}>
+              SECTION 02 &middot; STOK GUDANG
+            </div>
+            <div style={{ fontFamily: 'var(--font-cormorant)', fontWeight: 300, fontSize: 'clamp(48px, 5vw, 72px)', color: '#F2EDE4', lineHeight: 0.9 }}>
+              247 ton salak
+            </div>
+            <div style={{ fontFamily: 'var(--font-cormorant)', fontWeight: 300, fontSize: 'clamp(48px, 5vw, 72px)', color: 'rgba(242,237,228,0.4)', lineHeight: 0.9, fontStyle: 'italic' }}>
+              siap ekspor hari ini.
+            </div>
+          </div>
+          
+          {/* Kanan */}
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
+            <div style={{
+              display: 'inline-flex', alignItems: 'center', gap: '6px', border: '0.5px solid rgba(45,122,95,0.4)', padding: '8px 16px', borderRadius: '2px'
+            }}>
+              <div style={{ width: '4px', height: '4px', borderRadius: '50%', background: '#2d7a5f' }} />
+              <span style={{ fontFamily: 'var(--font-jetbrains)', fontSize: '9px', color: '#2d7a5f', letterSpacing: '0.15em' }}>ON-CHAIN VERIFIED</span>
+            </div>
+            <div style={{ fontFamily: 'var(--font-jetbrains)', fontSize: '8px', opacity: 0.15, marginTop: '8px', textAlign: 'right' }}>
+              Last verified: 2 jam lalu
+            </div>
+          </div>
+        </div>
+
+        {/* DIVIDER */}
+        <div style={{ borderTop: '0.5px solid rgba(255,255,255,0.04)', marginBottom: '48px' }} />
+
+        {/* GRID GUDANG */}
+        <div style={{
+          display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '1px', background: 'rgba(255,255,255,0.04)'
+        }}>
+          {[
+            {
+              nama: 'GUDANG SLEMAN',
+              kap: 150,
+              isi: 142,
+              persen: 94.6,
+              lok: 'Sleman, DI Yogyakarta'
+            },
+            {
+              nama: 'GUDANG MAGELANG',
+              kap: 100,
+              isi: 105,
+              persen: 100,
+              lok: 'Magelang, Jawa Tengah'
+            }
+          ].map(gdg => {
+            const isOverflow = gdg.isi >= gdg.kap;
+            const barFill = isOverflow ? 'rgba(184,115,51,0.8)' : 'linear-gradient(to right, #1a4a3a, #2d7a5f)';
+            const barWidth = isOverflow ? '100%' : `${gdg.persen}%`;
+            const textLeft = isOverflow ? 'OVERFLOW — ekspor segera' : `${gdg.persen}% kapasitas`;
+            const colorLeft = isOverflow ? 'rgba(184,115,51,0.7)' : 'rgba(45,122,95,0.7)';
+
+            return (
+              <div key={gdg.nama} style={{ background: '#080806', padding: '40px 48px' }}>
+                {/* Baris atas */}
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <div style={{ fontFamily: 'var(--font-jetbrains)', fontSize: '9px', letterSpacing: '0.18em', opacity: 0.3, textTransform: 'uppercase' }}>
+                    {gdg.nama}
+                  </div>
+                  <div style={{ fontFamily: 'var(--font-jetbrains)', fontSize: '8px', color: 'rgba(45,122,95,0.6)' }}>
+                    &bull; ON-CHAIN
+                  </div>
+                </div>
+
+                {/* Angka besar terisi */}
+                <div style={{ marginTop: '20px' }}>
+                  <div style={{ fontFamily: 'var(--font-cormorant)', fontWeight: 300, fontSize: 'clamp(52px, 5vw, 72px)', color: '#2d7a5f', lineHeight: 1 }}>
+                    {gdg.isi} ton
+                  </div>
+                  <div style={{ fontFamily: 'var(--font-jetbrains)', fontSize: '10px', opacity: 0.2, marginTop: '6px' }}>
+                    dari {gdg.kap} ton kapasitas
+                  </div>
+                </div>
+
+                {/* Progress bar */}
+                <div style={{ marginTop: '24px' }}>
+                  <div style={{ width: '100%', height: '4px', background: 'rgba(255,255,255,0.06)', borderRadius: '2px', overflow: 'hidden' }}>
+                    <div style={{ width: barWidth, height: '4px', background: barFill, borderRadius: '2px' }} />
+                  </div>
+                </div>
+
+                {/* Baris bawah */}
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '12px', alignItems: 'center' }}>
+                  <div style={{ fontFamily: 'var(--font-jetbrains)', fontSize: '9px', color: colorLeft }}>
+                    {textLeft}
+                  </div>
+                  <div style={{ fontFamily: 'var(--font-jetbrains)', fontSize: '8px', opacity: 0.15 }}>
+                    {gdg.lok}
+                  </div>
+                </div>
+              </div>
+            )
+          })}
+        </div>
+
+        {/* FOOTER SECTION */}
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '48px', paddingTop: '24px', borderTop: '0.5px solid rgba(255,255,255,0.04)', flexWrap: 'wrap', gap: '16px' }}>
+          <div style={{ fontFamily: 'var(--font-jetbrains)', fontSize: '9px', opacity: 0.2 }}>
+            Total stok aktif: 247 ton &middot; 2 gudang terverifikasi
+          </div>
+          <div style={{ fontFamily: 'var(--font-jetbrains)', fontSize: '9px', opacity: 0.12, textAlign: 'right' }}>
+            Data diperbarui setiap 6 jam via oracle on-chain
+          </div>
+        </div>
+      </section>
+
+    </main>
+  )
 }

@@ -592,14 +592,14 @@ export default function TextOverlay() {
                 fontWeight: 600,
                 fontSize: "clamp(13px, 1.3vw, 14px)",
                 padding: "16px 20px",
-                cursor: "none",
+                cursor: "pointer",
                 transition: "color 0.3s ease",
                 textShadow: TSB,
                 border: "none",
               }}
               onMouseEnter={(e) => { e.currentTarget.style.color = "#FFFFFF"; }}
               onMouseLeave={(e) => { e.currentTarget.style.color = "rgba(242,237,228,0.85)"; }}
-              onClick={() => { window.location.href = '/token#tokenomics'; }}
+              onClick={() => { window.location.href = '/token'; }}
             >
               Pelajari Lebih Lanjut →
             </button>
@@ -643,6 +643,7 @@ function MagneticButton({ isMobile }: { isMobile: boolean }) {
       onMouseMove={onMove}
       onMouseLeave={onLeave}
       onMouseEnter={(e) => { e.currentTarget.style.background = "#D4956A"; }}
+      onClick={() => { window.location.href = '/token'; }}
       style={{
         background: "#B87333",
         color: "#080806",
@@ -653,7 +654,7 @@ function MagneticButton({ isMobile }: { isMobile: boolean }) {
         textTransform: "uppercase",
         padding: "16px 44px",
         borderRadius: "2px",
-        cursor: isMobile ? "auto" : "none",
+        cursor: "pointer",
         transition: "background 0.3s ease",
         position: "relative",
         overflow: "hidden",
