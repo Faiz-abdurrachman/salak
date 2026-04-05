@@ -8,7 +8,7 @@ export default function PetaniPage() {
   const [submitted, setSubmitted] = useState(false)
 
   return (
-    <main style={{ background: '#080806', minHeight: '100vh', color: '#F2EDE4' }}>
+    <main style={{ position: 'relative', overflow: 'visible', background: '#080806', minHeight: '100vh', color: '#F2EDE4' }}>
       <style>{`
         * { box-sizing: border-box; margin: 0; padding: 0; }
         @keyframes pulseDot {
@@ -80,12 +80,43 @@ export default function PetaniPage() {
       </div>
 
       {/* SECTION 1 — HERO */}
-      <section style={{ position: 'relative', minHeight: '90vh', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' }}>
-        <img src="/background/1.jpeg" alt="Petani Background" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center', zIndex: 0 }} />
-        <div style={{ position: 'absolute', inset: 0, zIndex: 1, background: 'rgba(8,8,6,0.55)' }} />
-        <div style={{ position: 'absolute', inset: 0, zIndex: 2, background: 'linear-gradient(to top, rgba(8,8,6,1) 0%, rgba(8,8,6,0.5) 40%, transparent 100%)' }} />
+      <section style={{
+        position: 'relative',
+        minHeight: '100vh',
+        width: '100%',
+        display: 'flex',
+        flexDirection: 'column' as const,
+        justifyContent: 'flex-end',
+        overflow: 'hidden'
+      }}>
+        <img 
+          src="/background/1.jpeg" 
+          alt="Salak petani" 
+          style={{
+            position: 'absolute',
+            top: '0',
+            left: '0',
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover' as const,
+            objectPosition: 'center',
+            zIndex: 0,
+            display: 'block'
+          }} 
+        />
+        <div style={{ position: 'absolute', inset: 0, background: 'rgba(8,8,6,0.6)', zIndex: 1 }} />
+        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(8,8,6,1) 0%, rgba(8,8,6,0.5) 40%, transparent 100%)', zIndex: 2 }} />
 
-        <div style={{ position: 'relative', zIndex: 3, padding: '56px 60px 72px', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', flexWrap: 'wrap', gap: '48px' }}>
+        <div style={{ 
+          position: 'relative', 
+          zIndex: 3, 
+          padding: '56px 60px 72px', 
+          display: 'flex', 
+          justifyContent: 'space-between', 
+          alignItems: 'flex-end', 
+          flexWrap: 'wrap', 
+          gap: '48px' 
+        }}>
           {/* KIRI */}
           <div style={{ flex: 1, minWidth: '320px' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '16px' }}>
@@ -124,7 +155,7 @@ export default function PetaniPage() {
           <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', alignItems: 'flex-end' }}>
             {[
               { val: '1.240', lab: 'petani terdaftar' },
-              { val: 'Rp 8.500', lab: 'harga rata-rata/kg' },
+              { val: 'Rp 3.500', lab: 'harga rata-rata/kg' },
               { val: '25%', lab: 'peningkatan margin' }
             ].map(s => (
               <div key={s.lab} style={{ textAlign: 'right' }}>
@@ -251,32 +282,67 @@ export default function PetaniPage() {
               { l: 'RATING', v: '4.9', u: 'dari 5.0' },
             ].map(ms => (
               <div key={ms.l} style={{ background: 'rgba(255,255,255,0.01)', padding: '20px 24px' }}>
-                <div style={{ fontFamily: 'var(--font-jetbrains)', fontSize: '7px', opacity: 0.15, letterSpacing: '0.15em', marginBottom: '8px' }}>{ms.l}</div>
+                <div style={{ fontFamily: 'var(--font-jetbrains)', fontSize: '9px', opacity: 0.4, letterSpacing: '0.15em', marginBottom: '8px' }}>{ms.l}</div>
                 <div style={{ fontFamily: 'var(--font-cormorant)', fontWeight: 300, fontSize: '28px', color: '#D4956A' }}>{ms.v}</div>
-                <div style={{ fontFamily: 'var(--font-jetbrains)', fontSize: '8px', opacity: 0.15, marginTop: '2px' }}>{ms.u}</div>
+                <div style={{ fontFamily: 'var(--font-jetbrains)', fontSize: '10px', opacity: 0.3, marginTop: '2px' }}>{ms.u}</div>
               </div>
             ))}
           </div>
 
           {/* Mockup Table */}
           <div style={{ borderTop: '0.5px solid rgba(255,255,255,0.04)' }}>
-            <div style={{ background: 'rgba(255,255,255,0.02)', padding: '12px 24px', display: 'flex', gap: '16px' }}>
-              {["KOMODITAS", "GRADE", "STOK", "HARGA/KG", "STATUS"].map(h => (
-                <div key={h} style={{ flex: 1, fontFamily: 'var(--font-jetbrains)', fontSize: '7px', opacity: 0.15, letterSpacing: '0.15em', textTransform: 'uppercase' }}>{h}</div>
-              ))}
+            {/* Header Tipis */}
+            <div style={{ padding: '10px 24px', borderBottom: '0.5px solid rgba(255,255,255,0.04)', display: 'flex', gap: 0, alignItems: 'center' }}>
+              <div style={{ flex: 2, fontFamily: 'var(--font-jetbrains)', fontSize: '9px', opacity: 0.4, letterSpacing: '0.18em', textTransform: 'uppercase' }}>KOMODITAS</div>
+              <div style={{ flex: 1, fontFamily: 'var(--font-jetbrains)', fontSize: '9px', opacity: 0.4, letterSpacing: '0.18em', textTransform: 'uppercase' }}>GRADE</div>
+              <div style={{ flex: 1, fontFamily: 'var(--font-jetbrains)', fontSize: '9px', opacity: 0.4, letterSpacing: '0.18em', textTransform: 'uppercase', textAlign: 'right' }}>STOK</div>
+              <div style={{ flex: 1, fontFamily: 'var(--font-jetbrains)', fontSize: '9px', opacity: 0.4, letterSpacing: '0.18em', textTransform: 'uppercase', textAlign: 'right' }}>HARGA/KG</div>
+              <div style={{ flex: 1, fontFamily: 'var(--font-jetbrains)', fontSize: '9px', opacity: 0.4, letterSpacing: '0.18em', textTransform: 'uppercase', textAlign: 'right' }}>STATUS</div>
             </div>
+
+            {/* Data Rows */}
             {[
-              { k: 'Salak Pondoh', g: 'Grade A', s: '2 ton', h: 'Rp 8.500', st: 'LISTED', col: '#2d7a5f', bg: 'rgba(45,122,95,0.1)', brd: 'rgba(45,122,95,0.3)' },
-              { k: 'Salak Pondoh', g: 'Grade B', s: '3,2 ton', h: 'Rp 6.800', st: 'LISTED', col: '#2d7a5f', bg: 'rgba(45,122,95,0.1)', brd: 'rgba(45,122,95,0.3)' },
-              { k: 'Salak Banjarnegara', g: 'Grade A', s: '1,5 ton', h: 'Rp 9.000', st: 'PENDING', col: '#D4956A', bg: 'rgba(184,115,51,0.1)', brd: 'rgba(184,115,51,0.3)' },
+              { k: 'Salak Pondoh', a: 'Sleman, DIY', g: 'A', s: '2 ton', h: 'Rp 8.500', st: 'LISTED' },
+              { k: 'Salak Pondoh', a: 'Magelang, Jateng', g: 'B', s: '3,2 ton', h: 'Rp 6.800', st: 'LISTED' },
+              { k: 'Salak Banjarnegara', a: 'Banjarnegara, Jateng', g: 'A', s: '1,5 ton', h: 'Rp 9.000', st: 'PENDING' },
             ].map((r, i) => (
-              <div key={i} style={{ borderBottom: '0.5px solid rgba(255,255,255,0.03)', padding: '14px 24px', display: 'flex', gap: '16px', alignItems: 'center' }}>
-                <div style={{ flex: 1, fontFamily: 'var(--font-syne)', fontSize: '12px', color: 'rgba(242,237,228,0.6)' }}>{r.k}</div>
-                <div style={{ flex: 1, fontFamily: 'var(--font-syne)', fontSize: '12px', color: 'rgba(242,237,228,0.4)' }}>{r.g}</div>
-                <div style={{ flex: 1, fontFamily: 'var(--font-jetbrains)', fontSize: '11px', color: 'rgba(242,237,228,0.5)' }}>{r.s}</div>
-                <div style={{ flex: 1, fontFamily: 'var(--font-jetbrains)', fontSize: '11px', color: '#D4956A' }}>{r.h}</div>
+              <div key={i} style={{ borderBottom: '0.5px solid rgba(255,255,255,0.04)', padding: '20px 24px', display: 'flex', alignItems: 'center', gap: 0 }}>
+                {/* Kolom 1 - Komoditas */}
+                <div style={{ flex: 2 }}>
+                  <div style={{ fontFamily: 'var(--font-cormorant)', fontWeight: 300, fontSize: '18px', color: '#F2EDE4', lineHeight: 1.2 }}>{r.k}</div>
+                  <div style={{ fontFamily: 'var(--font-jetbrains)', fontSize: '10px', opacity: 0.4, marginTop: '4px' }}>&#9678; {r.a}</div>
+                </div>
+                
+                {/* Kolom 2 - Grade */}
                 <div style={{ flex: 1 }}>
-                  <span style={{ background: r.bg, color: r.col, border: `0.5px solid ${r.brd}`, padding: '2px 8px', borderRadius: '2px', fontFamily: 'var(--font-jetbrains)', fontSize: '8px' }}>
+                  <span style={{ 
+                    border: r.g === 'A' ? '0.5px solid rgba(184,115,51,0.3)' : '0.5px solid rgba(255,255,255,0.08)',
+                    color: r.g === 'A' ? 'rgba(184,115,51,0.6)' : 'rgba(242,237,228,0.3)',
+                    background: r.g === 'A' ? 'rgba(184,115,51,0.06)' : 'transparent',
+                    padding: '3px 10px', borderRadius: '2px', fontFamily: 'var(--font-jetbrains)', fontSize: '10px'
+                  }}>
+                    Grade {r.g}
+                  </span>
+                </div>
+
+                {/* Kolom 3 - Stok */}
+                <div style={{ flex: 1, textAlign: 'right', fontFamily: 'var(--font-jetbrains)', fontSize: '12px', color: '#F2EDE4', opacity: 0.7 }}>
+                  {r.s}
+                </div>
+
+                {/* Kolom 4 - Harga */}
+                <div style={{ flex: 1, textAlign: 'right', fontFamily: 'var(--font-jetbrains)', fontSize: '12px', color: '#D4956A' }}>
+                  {r.h}
+                </div>
+
+                {/* Kolom 5 - Status */}
+                <div style={{ flex: 1, textAlign: 'right' }}>
+                  <span style={{ 
+                    background: r.st === 'LISTED' ? 'rgba(45,122,95,0.08)' : 'rgba(184,115,51,0.08)',
+                    color: r.st === 'LISTED' ? 'rgba(45,122,95,0.7)' : 'rgba(184,115,51,0.5)',
+                    border: r.st === 'LISTED' ? '0.5px solid rgba(45,122,95,0.25)' : '0.5px solid rgba(184,115,51,0.2)',
+                    padding: '3px 10px', borderRadius: '2px', fontFamily: 'var(--font-jetbrains)', fontSize: '10px'
+                  }}>
                     {r.st}
                   </span>
                 </div>
@@ -285,7 +351,7 @@ export default function PetaniPage() {
           </div>
 
           <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '160px', background: 'linear-gradient(to top, rgba(8,8,6,0.95) 0%, transparent 100%)', display: 'flex', alignItems: 'flex-end', justifyContent: 'center', paddingBottom: '32px' }}>
-            <div style={{ fontFamily: 'var(--font-jetbrains)', fontSize: '10px', opacity: 0.3, letterSpacing: '0.15em' }}>&#128274; Bergabung untuk akses penuh</div>
+            <div style={{ fontFamily: 'var(--font-jetbrains)', fontSize: '12px', opacity: 0.6, letterSpacing: '0.15em', textTransform: 'uppercase' }}>Bergabung untuk akses penuh</div>
           </div>
         </div>
       </section>

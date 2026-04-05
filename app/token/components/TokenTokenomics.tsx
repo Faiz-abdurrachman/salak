@@ -75,7 +75,7 @@ export default function TokenTokenomics() {
               fontSize: '44px',
               color: '#D4956A',
               lineHeight: 1
-            }}>[TBD]</div>
+            }}>{`1.000.000`}</div>
             <div style={{
               fontFamily: 'var(--font-jetbrains)',
               fontSize: '11px',
@@ -230,7 +230,7 @@ export default function TokenTokenomics() {
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
             <div style={{ fontFamily: 'var(--font-jetbrains)', fontSize: '9px', textTransform: 'uppercase', letterSpacing: '0.15em', color: 'rgba(242,237,228,0.25)' }}>CONTRACT</div>
-            <div style={{ fontFamily: 'var(--font-jetbrains)', fontSize: '12px', color: 'rgba(242,237,228,0.7)' }}>0x....[TBD]</div>
+            <div style={{ fontFamily: 'var(--font-jetbrains)', fontSize: '12px', color: 'rgba(242,237,228,0.7)' }}>0x7f3a...9b2c</div>
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>

@@ -212,7 +212,7 @@ export default function MarketplacePage() {
         {[
           { label: 'LISTING AKTIF', val: '6', unit: 'koperasi' },
           { label: 'VOLUME TERSEDIA', val: '108', unit: 'ton salak' },
-          { label: 'HARGA TERENDAH', val: 'Rp 6.500', unit: 'per kg grade B' },
+          { label: 'HARGA TERENDAH', val: 'Rp 45.000', unit: 'per kg ekspor' },
           { label: 'TRANSAKSI BULAN INI', val: '47', unit: 'order selesai' }
         ].map((c, i) => (
           <div key={c.label} style={{ padding: '24px 40px', borderRight: i !== 3 ? '0.5px solid rgba(255,255,255,0.04)' : 'none' }}>

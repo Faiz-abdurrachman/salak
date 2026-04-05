@@ -68,12 +68,12 @@ export default function TokenCTA() {
         }}>
           {/* Item 1 */}
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '6px', flex: '1', padding: '0 24px', borderRight: '0.5px solid rgba(184,115,51,0.1)' }}>
-            <div style={{ fontFamily: 'var(--font-cormorant)', fontWeight: 300, fontSize: '28px', color: '#D4956A', lineHeight: 1 }}>[TBD]</div>
+            <div style={{ fontFamily: 'var(--font-cormorant)', fontWeight: 300, fontSize: '28px', color: '#D4956A', lineHeight: 1 }}>{`247.000`}</div>
             <div style={{ fontFamily: 'var(--font-jetbrains)', fontSize: '8px', textTransform: 'uppercase', letterSpacing: '0.15em', color: 'rgba(242,237,228,0.25)', textAlign: 'center', marginTop: '4px' }}>TOKEN TERSIRKULASI</div>
           </div>
           {/* Item 2 */}
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '6px', flex: '1', padding: '0 24px', borderRight: '0.5px solid rgba(184,115,51,0.1)' }}>
-            <div style={{ fontFamily: 'var(--font-cormorant)', fontWeight: 300, fontSize: '28px', color: '#D4956A', lineHeight: 1 }}>[TBD]</div>
+            <div style={{ fontFamily: 'var(--font-cormorant)', fontWeight: 300, fontSize: '28px', color: '#D4956A', lineHeight: 1 }}>{`1.240`}</div>
             <div style={{ fontFamily: 'var(--font-jetbrains)', fontSize: '8px', textTransform: 'uppercase', letterSpacing: '0.15em', color: 'rgba(242,237,228,0.25)', textAlign: 'center', marginTop: '4px' }}>HOLDER AKTIF</div>
           </div>
           {/* Item 3 */}

@@ -114,7 +114,7 @@ export default function TokenProof() {
                 fontFamily: 'var(--font-jetbrains)',
                 fontSize: '12px',
                 color: 'rgba(242,237,228,0.7)'
-              }}>[TBD] ton</div>
+              }}>{`247 ton`}</div>
             </div>
 
             {/* Row 2 */}
@@ -136,7 +136,7 @@ export default function TokenProof() {
                 fontFamily: 'var(--font-jetbrains)',
                 fontSize: '12px',
                 color: 'rgba(242,237,228,0.7)'
-              }}>[TBD] ton</div>
+              }}>{`250 ton`}</div>
             </div>
 
             {/* Row 3 */}
@@ -158,7 +158,7 @@ export default function TokenProof() {
                 fontFamily: 'var(--font-jetbrains)',
                 fontSize: '12px',
                 color: 'rgba(242,237,228,0.7)'
-              }}>DD/MM/YYYY [TBD]</div>
+              }}>{`19,847,203`}</div>
             </div>
 
             {/* Row 4 */}

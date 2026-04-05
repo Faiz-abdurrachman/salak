@@ -108,12 +108,12 @@ export default function HubPage() {
       {/* 2. HERO SECTION */}
       <section style={{
         position: 'relative',
-        minHeight: '100vh',
+        minHeight: '70vh',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'flex-end',
         overflow: 'hidden',
-        padding: '0 60px 0'
+        padding: '0 60px 48px'
       }}>
         {/* FOTO BACKGROUND */}
         <div style={{ zIndex: 0 }}>
@@ -214,17 +214,14 @@ export default function HubPage() {
       {/* 4. SECTION 2: STOK GUDANG */}
       <section style={{
         background: '#080806',
-        padding: '0 60px 96px',
-        borderTop: 'none',
+        padding: '96px 60px',
+        borderTop: '0.5px solid rgba(255,255,255,0.04)',
         marginTop: 0
       }}>
         {/* HEADER SECTION */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '56px', flexWrap: 'wrap', gap: '32px' }}>
           {/* Kiri */}
           <div>
-            <div style={{ fontFamily: 'var(--font-jetbrains)', fontSize: '8px', letterSpacing: '0.2em', opacity: 0.2, marginBottom: '16px', textTransform: 'uppercase' }}>
-              SECTION 02 &middot; STOK GUDANG
-            </div>
             <div style={{ fontFamily: 'var(--font-cormorant)', fontWeight: 300, fontSize: 'clamp(48px, 5vw, 72px)', color: '#F2EDE4', lineHeight: 0.9 }}>
               247 ton salak
             </div>
@@ -333,17 +330,14 @@ export default function HubPage() {
       {/* 5. SECTION 3: HARGA & MARKET */}
       <section style={{
         background: '#080806',
-        padding: '0 60px 96px',
-        borderTop: 'none',
+        padding: '96px 60px',
+        borderTop: '0.5px solid rgba(255,255,255,0.04)',
         marginTop: 0
       }}>
         {/* HEADER */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '56px', flexWrap: 'wrap', gap: '32px' }}>
           {/* Kiri */}
           <div>
-            <div style={{ fontFamily: 'var(--font-jetbrains)', fontSize: '8px', letterSpacing: '0.2em', opacity: 0.2, marginBottom: '16px', textTransform: 'uppercase' }}>
-              SECTION 03 &middot; HARGA & MARKET
-            </div>
             <div style={{ fontFamily: 'var(--font-cormorant)', fontWeight: 300, fontSize: 'clamp(48px, 5vw, 72px)', color: '#F2EDE4', lineHeight: 0.9 }}>
               Harga real-time,
             </div>
@@ -455,9 +449,6 @@ export default function HubPage() {
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '48px', flexWrap: 'wrap', gap: '32px' }}>
           {/* Kiri */}
           <div>
-            <div style={{ fontFamily: 'var(--font-jetbrains)', fontSize: '8px', letterSpacing: '0.2em', opacity: 0.2, marginBottom: '16px', textTransform: 'uppercase' }}>
-              SECTION 04 &middot; AKTIVITAS ON-CHAIN
-            </div>
             <div style={{ fontFamily: 'var(--font-cormorant)', fontWeight: 300, fontSize: 'clamp(48px, 5vw, 72px)', color: '#F2EDE4', lineHeight: 0.9 }}>
               Setiap transaksi,
             </div>
@@ -523,14 +514,11 @@ export default function HubPage() {
       </section>
 
       {/* 7. SECTION 5: EKSPOR ACTIVITY */}
-      <section style={{ background: '#080806', padding: '0 60px 96px', borderTop: 'none', marginTop: 0 }}>
+      <section style={{ background: '#080806', padding: '96px 60px', borderTop: '0.5px solid rgba(255,255,255,0.04)', marginTop: 0 }}>
         <div style={{ display: 'flex', gap: '80px', flexWrap: 'wrap' }}>
           
           {/* KOLOM KIRI */}
           <div style={{ flex: 1, minWidth: '300px' }}>
-            <div style={{ fontFamily: 'var(--font-jetbrains)', fontSize: '8px', letterSpacing: '0.2em', opacity: 0.2, marginBottom: '16px', textTransform: 'uppercase' }}>
-              SECTION 05 &middot; EKSPOR AKTIF
-            </div>
             <div style={{ fontFamily: 'var(--font-cormorant)', fontWeight: 300, fontSize: 'clamp(48px, 5vw, 72px)', color: '#F2EDE4', lineHeight: 0.9 }}>
               15 ton per minggu,
             </div>

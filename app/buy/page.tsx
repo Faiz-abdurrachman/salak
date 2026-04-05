@@ -221,8 +221,8 @@ export default function BuyPage() {
         borderTop: '0.5px solid rgba(255,255,255,0.04)', borderBottom: '0.5px solid rgba(255,255,255,0.04)'
       }}>
         {[
-          { label: 'MARKET CAP', val: 'Rp [TBD]' },
-          { label: 'TOTAL SUPPLY', val: '[TBD] token' },
+          { label: 'MARKET CAP', val: 'Rp 3,7M' },
+          { label: 'TOTAL SUPPLY', val: '1.000.000' },
           { label: 'BACKING RATIO', val: '1 : 1 fisik' },
           { label: 'NETWORK', val: 'Polygon (MATIC)' }
         ].map((s, i) => (
@@ -329,7 +329,7 @@ export default function BuyPage() {
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-between', padding: '14px 0', borderBottom: '0.5px solid rgba(255,255,255,0.03)' }}>
               <div style={{ fontFamily: 'var(--font-jetbrains)', fontSize: '9px', textTransform: 'uppercase', letterSpacing: '0.12em', color: 'rgba(242,237,228,0.2)' }}>HARGA PETANI</div>
-              <div style={{ fontFamily: 'var(--font-jetbrains)', fontSize: '12px', color: 'rgba(242,237,228,0.5)' }}>Rp {(amount*15000).toLocaleString('id-ID')}</div>
+              <div style={{ fontFamily: 'var(--font-jetbrains)', fontSize: '12px', color: 'rgba(242,237,228,0.5)' }}>Rp {(amount*3500).toLocaleString('id-ID')}</div>
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-between', padding: '14px 0', borderBottom: '0.5px solid rgba(255,255,255,0.03)' }}>
               <div style={{ fontFamily: 'var(--font-jetbrains)', fontSize: '9px', textTransform: 'uppercase', letterSpacing: '0.12em', color: 'rgba(242,237,228,0.2)' }}>NILAI EKSPOR</div>
